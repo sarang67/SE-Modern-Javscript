@@ -1,7 +1,7 @@
 {
-  "name": "javascript-dom",
+  "name": "javascript-basic",
   "version": "1.0.0",
-  "description": "JavaScript DOM",
+  "description": "JavaScript Basic",
   "main": "index.js",
   "repository": {
     "type": "git"
