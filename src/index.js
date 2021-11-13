@@ -5,129 +5,147 @@ app.innerHTML = `
   <h1>Javascript Basic</h1>
 `;
 
-/*
-4) script tag and position Manually and via tooling
-5) Var and hoisting
-6) let block scope
-7) const variable
-8) Datatypes (Premitive types and object types)
-
-Conditional Logic
-
-1) Truthy falsy
-2) if else statement
-3) ternary statement
-
-*/
-
+// conditional logic : using switch case
 /*
 
+const number = "1";
+let result;
 
-// Truthy falsy check
-//1) Boolen()
-// using not operator !
-
-console.log(Boolean(true));
-console.log(Boolean(""));
-console.log(Boolean(0));
-console.log(Boolean({}));
-console.log(Boolean({ name: "sarang" }));
-console.log(Boolean([]));
-console.log(Boolean([1, 2, 3]));
-console.log(Boolean("sarang"));
-console.log(Boolean(1234));
-console.log(Boolean(-1234));
-
-console.log("---------using not operator---------");
-console.log(!!true);
-console.log(!!"");
-console.log(!!0);
-console.log(!!{});
-console.log(!!{ name: "sarang" });
-console.log(!![]);
-console.log(!![1, 2, 3]);
-
-// falsy
-
-console.log("---------falsy values---------");
-console.log(Boolean(0));
-console.log(Boolean(undefined));
-console.log(Boolean(null));
-console.log(Boolean(""));
-console.log(Boolean(false));
-
-console.log("---------using not operator falsy check---------");
-console.log(!!0);
-console.log(!!"");
-console.log(!!null);
-console.log(!!undefined);
-
-
-// = (address assign), == (compare only value) , and === (strict compare value and type)
-
-let a = 10;
-
-console.log(1 == 1);
-// console.log(1 == "1");
-console.log(1 === "1");
-*/
-
-/*
-// if else
-
-const condition = true;
-
-if (condition) {
-  console.log("yes");
-}
-
-// if(Boolean(constion))
-if (condition) {
-  console.log("yes again");
-} else {
-  console.log("NO");
-}
-
-const number = 1; 
-let result; //undefined
-
-if (number === 99) {
-  result = "ninetynine";
-} else if (number === 100) {
-  result = "hundred";
-} else if (number === 1000) {
-  result = "thousand";
-} else {
-  result = "not matched";
+switch (number) {
+  case "1": {
+    let text = "one";
+    result = text;
+    break;
+  }
+  case 2: {
+    let text = "two";
+    result = text;
+    break;
+  }
+  case 3:
+    result = "three";
+    break;
+  default: 
+    result = "not metched";
 }
 
 console.log(result);
 
+*/
+
+// ***************Number in depth *********************
+
+// the Number() function in window object.
+
+/*
+// literal syntax (Alway prefered way)
+const literalNumber = 99;
+const literalNumber1 = "99";
+console.log(literalNumber);
+console.log(literalNumber1);
+
+// function syntax , used for ype conversion.
+// perform a type conversion in an non constructor context
+console.log(Number(99));
+console.log(Number("99"));
+console.log(Number("99px"));
+
+// constructor syntax , creates a wrapper object
+// avoid it to use
+
+console.log(new Number(44));
+console.log(new Number("44px"));
+*/
+
+/*
+
+//decimal in mumber
+
+console.log(2 + 3);
+console.log(0.1 + 0.2);
+
+console.log(100 / 3);
+console.log(33.333333333333336 * 3);
+
+const price = 9.33;
+const quality = 3;
+console.log(price * quality);
+
+const anotherPrice = 9.33 * 100;
+const anotherQuality = 3;
+console.log((anotherPrice * anotherQuality)/100);
 
 */
 
 /*
-3) ternary statement
 
+// parsing   to number
 
-// syntax
+console.log(parseInt("55"));
+console.log(parseInt("55px"));
+console.log(parseInt("55.2323px"));
 
-// expression ? if : else
+console.log(parseInt(1010101, 10));
+console.log(parseInt(1010101, 16));
+console.log(parseInt(1010101, 2));
+console.log(parseInt(1010101, 8));
 
-const condition = true;
+console.log(parseFloat("55.23px"));
+console.log(parseFloat("55.4545"));
 
-let result = condition ? "this is true" : "This is false";
+console.log(Number("555e10"));
+console.log(Number("555.999"));
+
+console.log(+"999");
+console.log(-"999");
+
+console.log(10 + "999");
+console.log(10 + +"999");
+*/
+
+/*******
+ *
+ *NAN 
+ // The global isNaN() function converts given value to NUmber() then test it
+
+ isNaN(value )  ---> isNaNcheck is given value Nan or not and if yes then return true else return false
+ so  isNaN(value )  ----> 1) check Number(value) --> and result will check in isNaN(esult )  ----> true or false
+
+const reuslt = Number(55);
 console.log(result);
 
-let isHappy = false;
+console.log(isNaN(reuslt)); // false 
+console.log(isNaN("I am string")); // true
+console.log(isNaN(10));
+console.log("---------------");
 
-console.log(isHappy ? ":)" : ":(");
+console.log(Number.isInteger(10.01));
 
-const number = 10;
-let anotherresult;
 
-anotherresult =
-  number === 99 ? "ninety nine" : number === 1 ? "one" : "no match";
+ * */
 
-console.log(anotherresult);
+/*
+// immutability :- all premitive value are immutable while assignig
+// all premitive are pass by value
+// https://developer.mozilla.org/en-US/docs/Glossary/Mutable
+
+
+
+
+const immutableNo = 99;
+let refrenceNumber = immutableNo;
+console.log(immutableNo);
+console.log(refrenceNumber);
+refrenceNumber = 44;
+console.log(immutableNo);
+console.log(refrenceNumber);
+
 */
+
+
+// type checking number
+
+// console.log(typeof 99.66);
+// console.log(99 instanceof Number);
+// console.log(Number(99) instanceof Number);
+// console.log(new Number(99) instanceof Number);
