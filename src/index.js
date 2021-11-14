@@ -4,148 +4,214 @@ const app = document.getElementById("app");
 app.innerHTML = `
   <h1>Javascript Basic</h1>
 `;
-
-// conditional logic : using switch case
 /*
+// Number in depth
+// Number methods
 
-const number = "1";
-let result;
+console.log(Number);
+console.dir(Number);
+console.log(Number.prototype);
 
-switch (number) {
-  case "1": {
-    let text = "one";
-    result = text;
-    break;
-  }
-  case 2: {
-    let text = "two";
-    result = text;
-    break;
-  }
-  case 3:
-    result = "three";
-    break;
-  default: 
-    result = "not metched";
-}
+let myNO = 5;
 
-console.log(result);
+console.log((99.123).toFixed());
+console.log((99.567).toFixed());
+console.log(Number((99.567).toFixed()));
+console.log(parseFloat((99.567).toFixed()));
+
+console.log((999.45).toPrecision(5));
+console.log((999.45).toPrecision(3));
+
+console.log(new Number(50).valueOf(10));
+
+*/
+//===============================================
+
+/*
+// string in depth
+
+// string creation
+
+// literal syntax
+let greet = "Hello Sarang";
+let pasta = "italian pasta";
+let areYouHappy = false;
+
+let one = 1;
+let two = 2;
+console.log(greet);
+
+console.log("My name is sarang jain");
+console.log("My name is sarang jain");
+
+console.log("sarang");
+
+console.log('HI my name is "sarang jain"');
+console.log("HI my name is 'sarang jain'");
+console.log("hello 'sarang' \"jain\" ");
+
+console.log("my" + " " + pasta + " " + "and this is very yummy !!!");
+console.log("my " + pasta + " and this is very yummy !!!");
+
+// string back tick syntax  (es56)  ``
+
+console.log(` Hello sarang i am in the back tick`);
+console.log(`my ${pasta} and this is very yummy !!!`);
+console.log(`my number is ${one}  ${two}`);
+
+console.log(` happy state  ${areYouHappy ? ":)" : ":("}`);
+console.log(`${2 + 2}`);
+
+console.log(`
+======================================
+name ===> 'sarang jain'
+age ===> 30,
+isMarried ===> yes i am married
+`);
+console.log("************************************");
+
+console.log(String(55));
+console.log(String("55"));
+console.log(String(true));
+console.log(String(55 + 11));
+
+console.log(String({ name: "sarang jain" }));
+console.log(String([1, 2, 3]));
+console.log(String(["Hi", "Hello", "Friends"]));
+
+console.log(55 + 11);
+console.log(55 + "11");
+console.log("11" + 55);
+console.log(String(11 + "11"));
+
+// function constructor (never used)
+let myName = new String("12");
+console.log(myName);
+console.log(myName.valueOf());
+
+*/
+//=============================================
+
+/*
+// we will check object
+
+let myInfo = {
+  name: "sarang",
+  age: 33,
+};
+
+// . operator
+
+// read
+console.log(myInfo.name);
+console.log(myInfo.age);
+
+// upade
+myInfo.name = "sarang jain";
+myInfo.age = 40;
+
+// add new property
+myInfo.city = "pune";
+
+console.log(myInfo);
+
+console.log("========================================");
+// [] member access operator
+
+let myInfo2 = {
+  name: "sarang",
+  age: 33,
+};
+
+// read
+console.log(myInfo2["name"]);
+console.log(myInfo2["age"]);
+
+// update
+myInfo2["name"] = "sarang jain";
+myInfo2["age"] = 40;
+
+// add a new property
+
+myInfo2["city"] = "pune";
+console.log(myInfo2);
 
 */
 
-// ***************Number in depth *********************
-
-// the Number() function in window object.
-
+//====================================
 /*
-// literal syntax (Alway prefered way)
-const literalNumber = 99;
-const literalNumber1 = "99";
-console.log(literalNumber);
-console.log(literalNumber1);
+// string memory representation , and index
 
-// function syntax , used for ype conversion.
-// perform a type conversion in an non constructor context
-console.log(Number(99));
-console.log(Number("99"));
-console.log(Number("99px"));
+console.log(new String("sarang jain"), "sarang jain");
+var myName = "sarang jain";
 
-// constructor syntax , creates a wrapper object
-// avoid it to use
+console.log("sarang jain");
+console.log(myName[0]);
+console.log(myName["0"]);
+console.log(myName["1"]);
+console.log(myName.length);
 
-console.log(new Number(44));
-console.log(new Number("44px"));
-*/
-
-/*
-
-//decimal in mumber
-
-console.log(2 + 3);
-console.log(0.1 + 0.2);
-
-console.log(100 / 3);
-console.log(33.333333333333336 * 3);
-
-const price = 9.33;
-const quality = 3;
-console.log(price * quality);
-
-const anotherPrice = 9.33 * 100;
-const anotherQuality = 3;
-console.log((anotherPrice * anotherQuality)/100);
+console.log(myName[myName.length - 1]);
 
 */
+//================================================
+/*
+//immutability in string , pass by value
+
+let myName = "sarang";
+let refName = myName;
+
+myName += " jain"; //myName = myname + jain
+refName += " kumar jain";
+
+console.log(myName);
+console.log(refName);
+
+const immutablestr = "i will never be changed";
+const uppercase = immutablestr.toUpperCase();
+
+console.log(immutablestr);
+console.log(uppercase);
+*/
+
+//=======================================
+/*
+// type checking in string
+
+console.log(typeof "sarang");
+console.log(typeof "123");
+console.log(typeof new String("sarang jain"));
+
+console.log("sarang" instanceof String);
+console.log(String("sarang jain") instanceof String);
+
+*/
+//=================================================
 
 /*
 
-// parsing   to number
+// string methods
 
-console.log(parseInt("55"));
-console.log(parseInt("55px"));
-console.log(parseInt("55.2323px"));
+console.log(String);
+console.dir(String);
+console.log(String.prototype);
 
-console.log(parseInt(1010101, 10));
-console.log(parseInt(1010101, 16));
-console.log(parseInt(1010101, 2));
-console.log(parseInt(1010101, 8));
+console.log("sarang jain".indexOf("j"));
+console.log("sarang jain".indexOf("z"));
 
-console.log(parseFloat("55.23px"));
-console.log(parseFloat("55.4545"));
+console.log("sarang jain".includes("a"));
 
-console.log(Number("555e10"));
-console.log(Number("555.999"));
+console.log("sarangkumarjain".replace("sarang", "teacher"));
 
-console.log(+"999");
-console.log(-"999");
+console.log("sarangkumarjain".slice(0, 5));
+console.log("sarangkumarjain".slice(4, 5));
+console.log("sarangkumarjain".slice(4, 9));
 
-console.log(10 + "999");
-console.log(10 + +"999");
-*/
+console.log("sarangkumarjain".slice(2, -1));
+console.log("sarangkumarjain".slice(2, -2));
 
-/*******
- *
- *NAN 
- // The global isNaN() function converts given value to NUmber() then test it
+console.log("sarang~kumar~jain".split("n"));
 
- isNaN(value )  ---> isNaNcheck is given value Nan or not and if yes then return true else return false
- so  isNaN(value )  ----> 1) check Number(value) --> and result will check in isNaN(esult )  ----> true or false
-
-const reuslt = Number(55);
-console.log(result);
-
-console.log(isNaN(reuslt)); // false 
-console.log(isNaN("I am string")); // true
-console.log(isNaN(10));
-console.log("---------------");
-
-console.log(Number.isInteger(10.01));
-
-
- * */
-
-/*
-// immutability :- all premitive value are immutable while assignig
-// all premitive are pass by value
-// https://developer.mozilla.org/en-US/docs/Glossary/Mutable
-
-
-
-
-const immutableNo = 99;
-let refrenceNumber = immutableNo;
-console.log(immutableNo);
-console.log(refrenceNumber);
-refrenceNumber = 44;
-console.log(immutableNo);
-console.log(refrenceNumber);
+console.log("               4512 8795 1512 1212                 ".trim());
 
 */
-
-
-// type checking number
-
-// console.log(typeof 99.66);
-// console.log(99 instanceof Number);
-// console.log(Number(99) instanceof Number);
-// console.log(new Number(99) instanceof Number);
