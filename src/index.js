@@ -4,265 +4,210 @@ const app = document.getElementById("app");
 app.innerHTML = `
   <h1>Javascript Basic</h1>
 `;
-/*
-// boolean in depth
-// boolean literal
-
-let isMarried = true;
-let hasChild = false;
-
-console.log(isMarried);
-console.log(hasChild);
-
-// boolean function for type conversion
-let arg = "x";
-console.log(Boolean(arg));
-console.log(Boolean("sarang"));
-console.log(!!arg);
-console.log(Boolean({}));
-console.log(Boolean([]));
-console.log("---------------");
-console.log(Boolean());
-console.log(Boolean(""));
-console.log(Boolean(null));
-console.log(Boolean(undefined));
-
-// Boolean function constructor
-
-console.log(new Boolean(true));
-console.log(new Boolean(true).valueOf());
-
-
-// boolean type checking
-console.log(typeof false);
-console.log(typeof true);
-console.log(typeof Boolean(true));
-console.log(Boolean(true) instanceof Boolean);
-console.log(new Boolean(true) instanceof Boolean);
-
-// immutabilty and pass by value
-console.log("---------------------------");
-let isMarried = true;
-let isMarriedRefrence = isMarried;
-
-console.log(isMarried);
-console.log(isMarriedRefrence);
-
-isMarried = false;
-console.log(isMarried);
-console.log(isMarriedRefrence);
-
-// prototype methods
-console.log("---------------------------");
-console.log(Boolean);
-console.dir(Boolean);
-console.dir(Boolean.prototype);
-
-console.log(true.toString());
-console.log(true);
-
-// Function in depth
-
-
+// Function in Depth
 
 /*
-//1 function declaration
-==========================
+Notes:
 
-function add() {
-  console.log("i am add function body");
-}
-// invoking the function, calling the funtion
-add();
-console.log(add);
-// parameter
-function add2(no1, no2) {
-  console.log(no1 + no2);
-}
-// argument
-add2(10, 20);
+//iife  Immediately Invoked Functions Expressions (IIFEs):=
 
-console.log("---------------------------");
-
-// 2 function expression (anonymous funtion)
-
-let addExpression = function () {
-  console.log("i am add function expression");
-};
-
-addExpression();
-
-let addExpression2 = function (no1, no2) {
-  console.log(no1 + no2);
-};
-
-addExpression2(50, 50);
-
-console.log(add2.name);
-console.log("---------------------------");
-
-//3 short function/lambda function , arrow function after ES6 (2015)
-
-//function add() {
-//  console.log("i am add function body");
-//}
-
-//function add2(no1, no2) {
-//  console.log(no1 + no2);
-//}
+IIFES(imediate invoked function execution statement ):- we can call our function efter just writing it immediatly, 
+so the purpose of this we can hide or do data privacy using the concept of IIFE. iife is executed only once, there is no concept 
+of reuse the purpose of iife only is data privacy of global execution contecxt so accidently our variable will not 
+be changed because they are only scoped inside the iife.
 
 
-let addArrow = () => {
-  console.log("i am add arrow function");
-};
+(function(aValue){
+	var a = aValue || 10;
+	console.log(a);
+})();
 
-let addArrowParameter = (no1, no2) => {
-  console.log(no1 + no2);
-};
 
-let addArrowParameter2 = (no1, no2) => console.log(no1 + no2);
+// function closure and functin scopes
 
-addArrowParameter(10, 20);
-addArrowParameter2(50, 100);
+ 
+closure, is the behaviour of function in javascript,
+child function can access the property of it's parent function, when its parent execution context already poped up from the stack
 
-//4
-//function constructor
 
-var addfnco = new Function();
-console.log(addfnco);
+// callback function
+
+callback this is a design pattern you write function where another function is being called , 
+ which you have passed in the parameter , in terms of api , setTimeout , click etc thy are taking af function and executing them call back 
+ ,after finishing own works.
+
+
+ 
+Callback function :- such function that are not being called by you , this is called by another function. 
+means that function is passed in another function as a parameter , and that function will call them instead you, called callback function.
+
+callback function:-  A function you give to another function, to be run when the other function is finished. 
+so the function you will call (i.e invoke), 'Calls back' by calling the function you gave it when it finishes.	
+
+
 */
 
 /*
-//hoisting with function
-==========================
-add(10, 20);
-console.log(add);
-console.log(addExp);
-console.log(addArrow);
+//iife  Immediately Invoked Functions Expressions (IIFEs):=
 
-function add(a, b) {
-  console.log(a + b);
-}
-
-let addExp = function (a, b) {
-  console.log(a + b);
-};
-
-let addArrow = (a, b) => console.log(a + b);
-*/
-
-/*
-// function rest parameter
-==========================
-function makePrice() {
-  console.log(arguments);
-  let total = 0;
-  for (let i = 0; i < arguments.length; i++) {
-    total = total + arguments[i];
-  }
-  console.log(`Total price ${total}`);
-}
-
-makePrice(100, 200, 300, 400, 500);
-//makePrice(5000, 10000);
-
-console.log("------------------------------");
-
-function makePriceRest(a, b, ...param) {
-  console.log(a, param);
-
-  let total = 0;
-  for (let i = 0; i < param.length; i++) {
-    total = total + param[i];
-  }
-  console.log(`Total price ${total}`);
-}
-
-makePriceRest(100, 200, 300, 400, 500);
-*/
-
-/*
-// function return value
-// emplicit return
-
-function makePriceRest(...param) {
-  let total = 0;
-  for (let i = 0; i < param.length; i++) {
-    total = total + param[i];
-  }
-  // return undefined;
-}
-
-let result = makePriceRest(100, 200, 300, 400, 500);
-console.log(result);
-
-let result2 = makePriceRest(1, 2, 3, 4, 5);
-console.log(result2);
-*/
-
-/*
-  note: rest will always be a last parameter
-  function test(param1 , ...param){} --> valid
-   function test(param1 , ...param, param3){} --> invalid
-     function test( ...param, param1 , param3){} --> invalid
-
-*/
-
-// Functions are Objects:- first class function, means they are object
-
-/*
-In only JS , function are object, menas what you can do with object, you can do with function , you can assign a function in a variable, you can pass the function as a parameter, you can create function on the fly as a object literals.
-*/
-
-/*
-// function are object
-==========================
-// first class function, means they are variable , means they are objects
-
-let logparam = function (param) {
-  console.log(param);
-};
-
-logparam(1);
-logparam("sarang");
-logparam([]);
-logparam({});
-console.log("-----------------");
-
-logparam(function () {});
-logparam(function () {});
-// param = function {}
-// param = function(){}
-
-function add() {
-  console.log("i am a add fn");
-}
-
-logparam(add);
-logparam(() => {});
-
-
-let greet = function () {
+(function () {
   console.log("hello");
-};
+})();
 
-greet();
+(function (myName) {
+  console.log(`Hello ==> ${myName}`);
+})("sarang");
 
-console.log(greet);
-console.dir(greet);
+(function (a, b) {
+  console.log(a + b);
+})(10, 30);
 
-greet.instructorName = "sarang jain";
 
-console.log(greet.instructorName);
 
-greet.instructorName = "sarang kumar jain";
+*/
 
-console.log(greet.instructorName);
-// function call
-greet();
+/*
+// function closure and functin scopes
 
-// function using as a object
-greet.iamobj = "i am afn and i am obj as well";
+// scope 1
+const anotherID = '1234abcd';
 
-console.dir(greet);
+funcion makeCarPartID(id){
+	// scope 2
+	funcion anotherFunction() {
+		// scope 3
+		const someId = 99
+		console.log(id,anotherID , someId)
+	}
+}
+
+makeCarPartID('x8ydsz12')
+
+example 
+=========
+
+function add(no1, no2) {
+  return function (no3 , no4) {
+    console.log(no1 + no2 + no3 + no4);
+  };
+}
+
+var addResult = add(10,20);
+console.log(addResult);
+addResult(30,40)
+
+
+example 
+=========
+
+function test(){
+  var one ="one"; 
+  return function(){
+    var two ="two";
+    return function(){
+      var three ="three";
+      return function(){
+        var four="four";
+        console.log(one , two , three , four)
+      }
+    }
+  }
+}
+
+test()()()();
+
+try to understand above example and make more for your practice understand it and think about function return
+
+example 
+=========
+
+function makeCarPartID(id) {
+  const theId = `CAR_PART_${id}`;
+  return function(name) {
+    return `${theId}_${name.toUpperCase()}`;
+  };
+}
+
+const carPartId = makeCarPartID('x8YdsZ12');
+console.log(carPartId('Left Door'));
+console.log(carPartId('Right Door'));
+console.log(carPartId('Windscreen'));
+
+const anotherCarPartId = makeCarPartID('7hs9zSaq0');
+console.log(anotherCarPartId('Left Door'));
+console.log(anotherCarPartId('Right Door'));
+console.log(anotherCarPartId('Windscreen'));
+
+example 
+=========
+function greet(whatToSay) {
+  return function (name) {
+    console.log(whatToSay + " " + name);
+  };
+}
+
+greet("namastey")("sarang");
+
+let NamasteyInSpanish = greet("hola");
+NamasteyInSpanish("amar");
+
+
+*/
+
+
+/*
+Callback functions
+example
+======
+
+  function tellMeWhenDone(callback) {
+	console.log(
+	  "tellMeWhenDone , now callback function will be executed back to back"
+	);
+	callback();
+  }
+
+  tellMeWhenDone(function () {
+	console.log("All Done .....");
+  });
+
+  tellMeWhenDone(function () {
+	console.log("I am done....");
+  });
+
+
+  // example
+
+  function getCarId(name, fn) {
+  const theId = `${name}_xyz`;
+  return fn(theId);
+}
+
+  const carId = getCarId("Maruti", function callBack(id) {
+    return `car part ID : ${id}`;
+  });
+
+  console.log(carId);
+
+  example
+  =========
+  setTimeout(()=> {
+  console.log('i will print after 1 sec')
+},1000)
+
+  example
+  =========
+  setInterval(()=>{
+  console.log('i will print after 1 sec')
+},1000)
+
+ example
+  =========
+[1,2,3,4,5].forEach((item , index)=>{
+   console.log(item , index)
+})
+
+// for example here we can see our inbuilt function are taking acall back function 
+means they will call means setTimout and setInterval and foreach will all what function i will pass , you an pass any function 
+nameed function , arrow function , or expression , short function is mostly preferred
 */
