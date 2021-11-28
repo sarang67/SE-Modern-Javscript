@@ -5,236 +5,205 @@ app.innerHTML = `
   <h1>Javascript Basic</h1>
 `;
 
-/* 
-   Array in depth
-   // array in JS :- array is the collection of anything , this is the special kind of object array are structured or ordered datastructure
-
-
-*/
-
 /*
-// array literal syntax and preferred syntax
 
-const myInformTion = ["sarang jain", 9405034908, "frontend trainer"];
-const myInformTionRef = myInformTion;
+// 1) spread operator,  merging-arrays
 
-// mutablilty in array (value can be changed on same address), pass by refrence,
-myInformTion.push("married");
-myInformTionRef.push("pune");
+const course1 = ["a", "b", "c"];
+const course2 = ["d", "e", "f"];
+const combineCourse = ["x", "y", ...course2, ...course1, "z", ...[[1, 2, 3]]];
+console.log(combineCourse);
 
-console.log(myInformTion);
-console.log(myInformTionRef);
+console.log("-------------");
 
-
-// using function constructor (not preferred way)
-const information2 = new Array("sarang jain", 9405034908, "frontend trainer");
-console.log(information2);
-
-
-// function conversion (Array() and new Array() both are doing same work)
-const information3 = Array("sarang jain", 9405034908, "frontend trainer");
-console.log(information3);
-
-console.log(Array(1, 2, 3, 4));
-
-
-const collection = [
-  {},
-  true,
-  "sarang",
-  function () {
-    console.log("Hello");
-  },
-  [1, 2, 3],
-  new Array(),
-  new String(),
+let courses = [
+  ["angular", 5000],
+  ["react", 5000],
+  ["javascript", 5000],
+  ["typescript", 5000],
 ];
 
-console.log(collection);
-collection[3]();
+let courseVue = [["vue", 5000]];
+let courseNode = ["node", 5000];
 
-console.log(collection[3]);
+let combineAllcourses = [...courses, ...courseVue, ...[courseNode]];
+console.log(combineAllcourses);
+
+// merging using concat method
+
+let allCourses = courses.concat(courseVue, [courseNode]);
+console.log(allCourses);
+console.log(courses);
+
 
 */
-
+//===============
 /*
+//1) array-shallow-deep-cloning break
 
-//3) array index properties element
-
-const trainerInfo = ["sarang jain", "Pune", "front end trainer"];
-
-// access the element
-console.log(trainerInfo[0]);
-console.log(trainerInfo["1"]);
-console.log(trainerInfo["2"]);
-
-console.log(trainerInfo.length);
-// access the last element
-console.log(trainerInfo[trainerInfo.length - 1]);
-
-// array are special kind of object
-
-trainerInfo.contactno = 9405034908;
-
-console.log(trainerInfo.contactno);
-console.log(trainerInfo["contactno"]);
-
-//trainerInfo.contactno = 12345565;
-
-// update the value
-trainerInfo[0] = "Mr saranag jain";
-
-// empty array
-trainerInfo.length = 0;
-
-console.log(trainerInfo);
-
-*/
-
-/*
-
-//  multidimenssinal array
-// array inside ayyar is  called multidimenss array
-// [[] , [] , []]
-
-
-const trainerInfo = [
-  ["Javascript", 5000],
-  ["React", 5000],
-  ["Angular", 5000],
+let courses = [
+  "angular",
+  ["v9", 5000],
+  "react",
+  ["v16", 5000],
+  "javascript",
+  ["V6", 5000],
+  "typescript",
+  ["V3", 5000],
 ];
 
-console.log(trainerInfo);
-console.log(trainerInfo[2]);
-console.log(trainerInfo[2][0]);
+// let courseClone = courses;
 
-let jsCourse = trainerInfo[0];
-console.log(jsCourse);
-console.log(jsCourse[0]);
-console.log(jsCourse[1]);
+// using spread operator
+//let courseClone = [...courses];
 
+// using slice method
+// let courseClone = courses.slice();
+
+//let courseClone = Array.from(courses);
+
+// how to resolve deep copy issue
+// 1) you can change to string , and again to array
+
+
+ //  const arrstr = JSON.stringify(arr ) ---> array will  convert to sring
+
+ // const arr =  JSON.parse (arrstr) ---> array string will  convert to array
+
+
+
+let courseArrString = JSON.stringify(courses);
+
+console.log(courseArrString);
+
+let courseClone = JSON.parse(courseArrString); 
+
+//console.log(courseClone);
+
+courseClone[0] = "angular is updated";
+courseClone[1][0] = "v10";
+
+console.log(courses);
+console.log(courseClone);
 */
 
 /*
-// array destructuring
+// 3) array reverse , and sort
 
-const tranerInformation = [
-  ["Javascript", 5000],
-  ["React", 15000],
-  ["Angular", 25000],
-  ["Vue", 35000],
-  ["Nodejs", 45000],
-  ["ionic", 55000],
-  ["react-native", 65000],
-  ["html-css", 75000],
+let courses = ["angular", "javascript", "react", "typescript"];
+
+console.log(courses.reverse());
+console.log(courses);
+
+let numbers = [1, 9, 8, 18, 16];
+
+// let cb = (a, b) => {
+//   return b - a;
+// };
+
+let sortArray = numbers.sort((a, b) => {
+  return b - a;
+});
+
+console.log(sortArray);
+
+let courseswithId = [
+  { id: 18, name: "angular" },
+  { id: 28, name: "react" },
+  { id: 3, name: "javascript" },
+  { id: 45, name: "typescript" },
 ];
 
-console.log(tranerInformation);
+console.log(courseswithId);
 
-let jsCollection = tranerInformation[0];
-console.log(jsCollection);
+const sortResult = courseswithId.sort((a, b) => {
+  console.log(a);
+  console.log(b);
+  return a.id - b.id;
+});
 
-let jsFees = jsCollection[1];
-console.log(jsFees);
+console.log(sortResult);
 
-const [a, b, c, [d, e], infoIonic, , rn] = tranerInformation;
 
-console.log(a);
-console.log(b);
-console.log(c);
-console.log(d);
-console.log(e);
-
-console.log(infoIonic);
-const [coursename, coursefeess] = infoIonic;
-console.log(coursename);
-console.log(coursefeess);
-
-console.log(rn);
-
-console.log("-------------------------------------");
-const tranerInformation2 = [
-  ["Javascript", 5000],
-  ["React", 15000],
-  ["Angular", 25000],
-  ["Vue", 35000],
-  ["Nodejs", 45000],
-  ["ionic", 55000],
-  ["react-native", 65000],
-  ["html-css", 75000],
-];
-
-const [aa, bb, cc, ...restElemet] = tranerInformation2;
-
-console.log(aa, bb, cc);
-
-console.log(restElemet);
+===============================
 */
 
 /*
-// finding array element
 
+//4) array type checking
+
+console.log(typeof []);
+console.log([] instanceof Array);
+console.log([] instanceof Object);
+
+console.log(new Array() instanceof Array);
+console.log(new Array() instanceof Object);
+
+console.log({} instanceof Object);
+
+console.log(Array.isArray([1, 2, 3]));
+console.log(Array.isArray({}));
+console.log(Array.isArray("sarang"));
+
+console.log(Object.prototype.toString.call([]));
+console.log(Object.prototype.toString.call(5))
+
+=========
+*/
+
+/*
+// array imperative iteration
 
 let courses = ["angular", "react", "javascript", "typescript"];
 
-// findinf item with index
-const reactIndex = courses.indexOf("react");
-
-if (reactIndex !== -1) {
-  console.log(`react is present in array at no of ${reactIndex}`);
-}
-
-// // findinf item with  yes or no
-console.log(courses.includes("javascript"));
-
-let courseWIthId = [
-  { id: 1, name: "angular" },
-  { id: 2, name: "react" },
-  { id: 3, name: "javascript" },
-  { id: 4, name: "typescript" },
-];
-
-console.log(courseWIthId);
-
-// findindex
-// callback function
-
-function findTheitemsCB(course, courseIndex) {
+for (let i = 0; i <= courses.length; i++) {
+  const course = courses[i];
+  if (course === "javascript") {
+    console.log("do something for js");
+  }
   console.log(course);
-  console.log(courseIndex);
-  if (course.name === "javascript") {
-    return true;
+}
+
+*/
+
+/*
+// break and continue statement
+
+// the break statement "Jump out" from loop
+// the continue statement jump over one iteration in the loop
+
+let courses = ["angular", "react", "javascript", "typescript"];
+
+for (let i = 0; i <= courses.length; i++) {
+  const course = courses[i];
+  console.log(course);
+
+  if (course === "react") {
+    console.log("My work done");
+    break;
   }
 }
 
-// let cb = (item, index) => {
-//   console.log(item);
-//   console.log(index);
-// };
+let courses = ["angular", "react", "javascript", "typescript"];
 
-console.log(courseWIthId.findIndex(findTheitemsCB));
+for (let i = 0; i <= courses.length; i++) {
+  const course = courses[i];
+  console.log(course);
 
-const index = courseWIthId.findIndex((course, courseIndex) => {
-  if (course.name === "javascript") {
-    return true;
+  if (course === "react") {
+    console.log("My work done");
+    continue;
   }
-});
+  console.log("----Log me----");
+}
+*/
 
-console.log(index);
+/*
 
-console.log(
-  courseWIthId.findIndex((item, index) => item.name === "javascript")
-);
+//  iteration-for-of declarativew ay
+let courses = ["angular", "react", "javascript", "typescript"];
 
-console.log(courseWIthId[index]);
-
-// find item in true false
-const ItemFound = courseWIthId.find((course, index) => {
-  if (course.name === "react") {
-    return true;
-  }
-});
-
-console.log(ItemFound);
-
+for (let course of courses) {
+  console.log(course);
+}
 */
