@@ -3,207 +3,151 @@ import "../assets/css/style.css";
 const app = document.getElementById("app");
 app.innerHTML = `
   <h1>Javascript Basic</h1>
+ 
 `;
 
 /*
+  foreach((p1,p2)=>{//your logic}) -expect a call back , this does not return anything
+  p1 --> item
+  p2 --> index
 
-// 1) spread operator,  merging-arrays
+  map((p1,p2)=>{//your logic}) --> this will return a brand new array for each mapped item
+  
+  filter((p1,p2)=>{//your logic}) --> will return brand new array for filtered items
 
-const course1 = ["a", "b", "c"];
-const course2 = ["d", "e", "f"];
-const combineCourse = ["x", "y", ...course2, ...course1, "z", ...[[1, 2, 3]]];
-console.log(combineCourse);
+  reduce((p1,p2)=>{//your logic},default value);  // reduce to multiple value to a single value
+  // prev--> accuumulative value, after doing operation on last item this will return final result 
+  
+  find((p1,p2)=>{//your logic}) ---> when cb function return true it will return that item , so its upt to use as per our logiv when we need to return true ,
 
-console.log("-------------");
-
-let courses = [
-  ["angular", 5000],
-  ["react", 5000],
-  ["javascript", 5000],
-  ["typescript", 5000],
-];
-
-let courseVue = [["vue", 5000]];
-let courseNode = ["node", 5000];
-
-let combineAllcourses = [...courses, ...courseVue, ...[courseNode]];
-console.log(combineAllcourses);
-
-// merging using concat method
-
-let allCourses = courses.concat(courseVue, [courseNode]);
-console.log(allCourses);
-console.log(courses);
-
-
-*/
-//===============
-/*
-//1) array-shallow-deep-cloning break
-
-let courses = [
-  "angular",
-  ["v9", 5000],
-  "react",
-  ["v16", 5000],
-  "javascript",
-  ["V6", 5000],
-  "typescript",
-  ["V3", 5000],
-];
-
-// let courseClone = courses;
-
-// using spread operator
-//let courseClone = [...courses];
-
-// using slice method
-// let courseClone = courses.slice();
-
-//let courseClone = Array.from(courses);
-
-// how to resolve deep copy issue
-// 1) you can change to string , and again to array
-
-
- //  const arrstr = JSON.stringify(arr ) ---> array will  convert to sring
-
- // const arr =  JSON.parse (arrstr) ---> array string will  convert to array
-
-
-
-let courseArrString = JSON.stringify(courses);
-
-console.log(courseArrString);
-
-let courseClone = JSON.parse(courseArrString); 
-
-//console.log(courseClone);
-
-courseClone[0] = "angular is updated";
-courseClone[1][0] = "v10";
-
-console.log(courses);
-console.log(courseClone);
-*/
+  findIndex((p1,p2)=>{//your logic}) --> same funda like find , but it will return a index , in case not found it returns -1
+  */
 
 /*
-// 3) array reverse , and sort
+//1) foreach ,
 
-let courses = ["angular", "javascript", "react", "typescript"];
-
-console.log(courses.reverse());
-console.log(courses);
-
-let numbers = [1, 9, 8, 18, 16];
-
-// let cb = (a, b) => {
-//   return b - a;
-// };
-
-let sortArray = numbers.sort((a, b) => {
-  return b - a;
-});
-
-console.log(sortArray);
-
-let courseswithId = [
-  { id: 18, name: "angular" },
-  { id: 28, name: "react" },
-  { id: 3, name: "javascript" },
-  { id: 45, name: "typescript" },
-];
-
-console.log(courseswithId);
-
-const sortResult = courseswithId.sort((a, b) => {
-  console.log(a);
-  console.log(b);
-  return a.id - b.id;
-});
-
-console.log(sortResult);
-
-
-===============================
-*/
+  [1, 2, 3, 4].forEach((item, index) => {
+    //  console.log(item * 2);
+  });
+  
+  const items = [
+    { id: "🍔", name: "super burger", price: 399 },
+    { id: "🍟", name: "Jumbo fries", price: 199 },
+    { id: "🍾", name: "big slurp", price: 299 },
+  ];
+  
+  items.forEach((item, index) => {
+    // console.log(item);
+    app.innerHTML += ` <li> Item no ${index + 1} ${item.id} ${item.name} -- ${
+      item.price
+    } Rs</li>`;
+    console.log(app.innerHTML);
+  });
+  
+  */
 
 /*
-
-//4) array type checking
-
-console.log(typeof []);
-console.log([] instanceof Array);
-console.log([] instanceof Object);
-
-console.log(new Array() instanceof Array);
-console.log(new Array() instanceof Object);
-
-console.log({} instanceof Object);
-
-console.log(Array.isArray([1, 2, 3]));
-console.log(Array.isArray({}));
-console.log(Array.isArray("sarang"));
-
-console.log(Object.prototype.toString.call([]));
-console.log(Object.prototype.toString.call(5))
-
-=========
-*/
+  // map
+  
+  const fiftyperOffBurger = items.map((item, index) => {
+    if (item.id === "🍔") {
+      return { id: item.id, name: item.name, price: item.price / 2 };
+    }
+    return item;
+  });
+  
+  console.log(fiftyperOffBurger);
+  
+  console.log("===============");
+  
+  const mapped = [1, 2, 3, 4].map((item, index) => {
+    return "😍";
+  });
+  
+  console.log(mapped);
+  
+  
+ */
 
 /*
-// array imperative iteration
+  // filter
+  const items = [
+    { id: "🍔", name: "super burger", price: 399 },
+    { id: "🍟", name: "Jumbo fries", price: 199 },
+    { id: "🍾", name: "big slurp", price: 299 },
+  ];
+  
+  console.log(items);
+  
+  const expensiveItems = items.filter((item) => {
+    if (item.price > 200) {
+      return true;
+    }
+  });
+  
+  console.log(expensiveItems);
+  
+  console.log([true, true, false, false, true].filter((item) => item === true));
+  
+  console.log(
+    ["sarang", "rishi", "sandeep", "vassu", "yogi"].filter(
+      (item) => item.length > 5
+    )
+  );
+  
+  */
+/*
+  // reduce
+  const items = [
+    { id: "🍔", name: "super burger", price: 399 },
+    { id: "🍟", name: "Jumbo fries", price: 199 },
+    { id: "🍾", name: "big slurp", price: 299 },
+  ];
+  
+  const menutotal = items.reduce((prev, next) => {
+    console.log(prev, next);
+    return prev + next.price;
+  }, 0);
+  
+  console.log(menutotal);
+  
+  // const total = [1, 2, 3, 4, 5, 6].reduce((prev, next) => {
+  //   console.log(prev, next);
+  //   return prev + next;
+  // }, 0);
+  
+  // console.log(total);
+  
+ */
 
-let courses = ["angular", "react", "javascript", "typescript"];
+/*
+   // find / findindex
 
-for (let i = 0; i <= courses.length; i++) {
-  const course = courses[i];
-  if (course === "javascript") {
-    console.log("do something for js");
+  const items = [
+    { id: "🍔", name: "super burger", price: 399 },
+    { id: "🍟", name: "Jumbo fries", price: 199 },
+    { id: "🍾", name: "big slurp", price: 299 },
+  ];
+  
+  const friesFound = items.find((item, index) => {
+    if (item.id === "🍟") {
+      return true;
+    }
+  });
+  
+  if (friesFound) {
+    console.log(
+      `fries is avaibvale in menu and its price id ${friesFound.price}`
+    );
+  } else {
+    console.log("not found");
   }
-  console.log(course);
-}
-
-*/
-
-/*
-// break and continue statement
-
-// the break statement "Jump out" from loop
-// the continue statement jump over one iteration in the loop
-
-let courses = ["angular", "react", "javascript", "typescript"];
-
-for (let i = 0; i <= courses.length; i++) {
-  const course = courses[i];
-  console.log(course);
-
-  if (course === "react") {
-    console.log("My work done");
-    break;
-  }
-}
-
-let courses = ["angular", "react", "javascript", "typescript"];
-
-for (let i = 0; i <= courses.length; i++) {
-  const course = courses[i];
-  console.log(course);
-
-  if (course === "react") {
-    console.log("My work done");
-    continue;
-  }
-  console.log("----Log me----");
-}
-*/
-
-/*
-
-//  iteration-for-of declarativew ay
-let courses = ["angular", "react", "javascript", "typescript"];
-
-for (let course of courses) {
-  console.log(course);
-}
-*/
+  
+  const friesFoundIndex = items.findIndex((item, index) => {
+    if (item.id === "🍟") {
+      return true;
+    }
+  });
+  
+  console.log("===>", friesFoundIndex);
+  */
