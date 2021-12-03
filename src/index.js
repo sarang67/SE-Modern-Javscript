@@ -3,151 +3,118 @@ import "../assets/css/style.css";
 const app = document.getElementById("app");
 app.innerHTML = `
   <h1>Javascript Basic</h1>
- 
 `;
 
 /*
-  foreach((p1,p2)=>{//your logic}) -expect a call back , this does not return anything
-  p1 --> item
-  p2 --> index
-
-  map((p1,p2)=>{//your logic}) --> this will return a brand new array for each mapped item
-  
-  filter((p1,p2)=>{//your logic}) --> will return brand new array for filtered items
-
-  reduce((p1,p2)=>{//your logic},default value);  // reduce to multiple value to a single value
-  // prev--> accuumulative value, after doing operation on last item this will return final result 
-  
-  find((p1,p2)=>{//your logic}) ---> when cb function return true it will return that item , so its upt to use as per our logiv when we need to return true ,
-
-  findIndex((p1,p2)=>{//your logic}) --> same funda like find , but it will return a index , in case not found it returns -1
-  */
+1) array add
+2) array remove
 
 /*
-//1) foreach ,
 
-  [1, 2, 3, 4].forEach((item, index) => {
-    //  console.log(item * 2);
-  });
-  
-  const items = [
-    { id: "🍔", name: "super burger", price: 399 },
-    { id: "🍟", name: "Jumbo fries", price: 199 },
-    { id: "🍾", name: "big slurp", price: 299 },
-  ];
-  
-  items.forEach((item, index) => {
-    // console.log(item);
-    app.innerHTML += ` <li> Item no ${index + 1} ${item.id} ${item.name} -- ${
-      item.price
-    } Rs</li>`;
-    console.log(app.innerHTML);
-  });
-  
-  */
+splice : return deleted array , mutable , (start index , lenghth , add extra item place of start index)
+--> delete , and add item instead of dlt
+--> only add item anywhere
+
+
+slice : returned slice array , immutabke , (start index , last index), last index is excluded ,  
+---> delete item from anywhere
+
+*/
 
 /*
-  // map
-  
-  const fiftyperOffBurger = items.map((item, index) => {
-    if (item.id === "🍔") {
-      return { id: item.id, name: item.name, price: item.price / 2 };
-    }
-    return item;
-  });
-  
-  console.log(fiftyperOffBurger);
-  
-  console.log("===============");
-  
-  const mapped = [1, 2, 3, 4].map((item, index) => {
-    return "😍";
-  });
-  
-  console.log(mapped);
-  
-  
- */
+=================
+let subject = ["JS", "React", "Angular"];
+
+// add in begining - mutable way
+subject.unshift("Vue");
+
+// add the last item -mutable way
+
+subject.push("redux");
+console.log(subject);
+
+console.log("------------------------");
+
+let subject2 = ["JS", "React", "Angular"];
+// add in begining - immutable way
+
+console.log(["Vue", ...subject2]);
+
+// add in last -immutable way
+console.log([...subject2, "Redux"]);
+console.log(subject2);
+
+// add anywhere in the array
+console.log("------------------------");
+let count = [1, 2, 3, 4, 5];
+//count.splice(startIndex, lengthcount to delete,  whatdo ypu want to place instead startindex)
+
+//console.log(count.splice(0));
+//console.log(count.splice(0, 2));
+
+console.log(count.splice(2, 0, "vasu"));
+console.log(count);
+console.log("------------------------");
+
+let subject3 = ["JS", "React", "Angular"];
+
+// add anywhere
+const index = 2;
+console.log([...subject3.splice(0, index), "Vue", ...subject3.splice(0)]);
+
+
+console.log(subject3);
+*/
 
 /*
-  // filter
-  const items = [
-    { id: "🍔", name: "super burger", price: 399 },
-    { id: "🍟", name: "Jumbo fries", price: 199 },
-    { id: "🍾", name: "big slurp", price: 299 },
-  ];
-  
-  console.log(items);
-  
-  const expensiveItems = items.filter((item) => {
-    if (item.price > 200) {
-      return true;
-    }
-  });
-  
-  console.log(expensiveItems);
-  
-  console.log([true, true, false, false, true].filter((item) => item === true));
-  
-  console.log(
-    ["sarang", "rishi", "sandeep", "vassu", "yogi"].filter(
-      (item) => item.length > 5
-    )
-  );
-  
-  */
-/*
-  // reduce
-  const items = [
-    { id: "🍔", name: "super burger", price: 399 },
-    { id: "🍟", name: "Jumbo fries", price: 199 },
-    { id: "🍾", name: "big slurp", price: 299 },
-  ];
-  
-  const menutotal = items.reduce((prev, next) => {
-    console.log(prev, next);
-    return prev + next.price;
-  }, 0);
-  
-  console.log(menutotal);
-  
-  // const total = [1, 2, 3, 4, 5, 6].reduce((prev, next) => {
-  //   console.log(prev, next);
-  //   return prev + next;
-  // }, 0);
-  
-  // console.log(total);
-  
- */
+subject3 ---> ["JS", "React", "Angular"]
+...subject3.splice(0, index) --> ["JS", "React"]
+subject3 ---> [ "Angular"]
+
+
+Result(["JS", "React", "Vue" , "Angular"])
+*/
+
+//=======================================================
+
+// add remove
 
 /*
-   // find / findindex
+let subject = ["Vue", "JS", "React", "Angular", "redux"];
 
-  const items = [
-    { id: "🍔", name: "super burger", price: 399 },
-    { id: "🍟", name: "Jumbo fries", price: 199 },
-    { id: "🍾", name: "big slurp", price: 299 },
-  ];
-  
-  const friesFound = items.find((item, index) => {
-    if (item.id === "🍟") {
-      return true;
-    }
-  });
-  
-  if (friesFound) {
-    console.log(
-      `fries is avaibvale in menu and its price id ${friesFound.price}`
-    );
-  } else {
-    console.log("not found");
-  }
-  
-  const friesFoundIndex = items.findIndex((item, index) => {
-    if (item.id === "🍟") {
-      return true;
-    }
-  });
-  
-  console.log("===>", friesFoundIndex);
-  */
+// removing first elemnt --mutable way
+
+console.log(subject.shift());
+
+console.log(subject);
+
+// removing last elemnt --mutable way
+
+console.log(subject.pop());
+
+console.log(subject);
+
+// immutable way
+console.log("----------------");
+
+var test = [1, 2, 3, 4, 5];
+// test.slice(start index, last index);
+console.log(test.slice(0));
+console.log(test.slice(0, 2));
+console.log(test.slice(1, 4));
+
+console.log(test.slice(-1));
+console.log(test.slice(-2));
+console.log(test.slice(-3));
+
+console.log(test.slice(-5, -3));
+console.log(test);
+
+console.log("----------------");
+// remove from anywhere
+const index = 2;
+let subject2 = ["Vue", "JS", "React", "redux"];
+
+console.log([...subject2.slice(0, index), ...subject2.slice(index + 1)]);
+console.log(subject2);
+*/
