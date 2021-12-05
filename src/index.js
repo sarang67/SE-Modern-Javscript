@@ -5,116 +5,324 @@ app.innerHTML = `
   <h1>Javascript Basic</h1>
 `;
 
-/*
-1) array add
-2) array remove
+/** Object in depth */
 
 /*
+//1 object creation
+const obj = {};
+console.log(obj);
 
-splice : return deleted array , mutable , (start index , lenghth , add extra item place of start index)
---> delete , and add item instead of dlt
---> only add item anywhere
+const personlaInfo = {
+  name: "sarang jain",
+  age: 33,
+  isMarried: true,
+  profession: "software enginer and teacher",
+  friends: ["abhishek", "amit", "adarsh"],
+  address: {
+    flatNo: 201,
+    street: "Vunay nagar",
+    city: "gwalior",
+    state: "MP",
+    pin: 411014,
+  },
 
+  getPerdonalInfo: function () {
+    console.log(this.name + this.age + this.isMarried);
+  },
+};
 
-slice : returned slice array , immutabke , (start index , last index), last index is excluded ,  
----> delete item from anywhere
+console.log(personlaInfo);
+
+console.log(personlaInfo.address.state);
+personlaInfo.getPerdonalInfo();
+
+// using function constructor
+
+console.log(new Object());
+console.log(Object());
+
+console.log(Object({ name: "sarang", age: 33 }));
+
+console.log(Object("sarang"));
+console.log(Object(5));
+console.log(Object(true));
+console.log(Object([1, 2, 3]));
+console.log(Object(() => {}));
 
 */
 
+//----------------------------
+
 /*
-=================
-let subject = ["JS", "React", "Angular"];
+// muatbility , pass by refrence
 
-// add in begining - mutable way
-subject.unshift("Vue");
+let kkInfo = { name: "Krishnkant", age: 35 };
 
-// add the last item -mutable way
+let abhishekInfo = kkInfo;
 
-subject.push("redux");
-console.log(subject);
+console.log(kkInfo);
+console.log(abhishekInfo);
 
-console.log("------------------------");
+kkInfo.name = "Krishnkant bharatdwaj";
 
-let subject2 = ["JS", "React", "Angular"];
-// add in begining - immutable way
+console.log(kkInfo);
+console.log(abhishekInfo);
 
-console.log(["Vue", ...subject2]);
+abhishekInfo.age = 40;
 
-// add in last -immutable way
-console.log([...subject2, "Redux"]);
-console.log(subject2);
+console.log(kkInfo);
+console.log(abhishekInfo);
 
-// add anywhere in the array
-console.log("------------------------");
-let count = [1, 2, 3, 4, 5];
-//count.splice(startIndex, lengthcount to delete,  whatdo ypu want to place instead startindex)
+let sarang = abhishekInfo;
+sarang.lastname = "Jain";
 
-//console.log(count.splice(0));
-//console.log(count.splice(0, 2));
+console.log(kkInfo);
+console.log(abhishekInfo);
+console.log(sarang);
 
-console.log(count.splice(2, 0, "vasu"));
-console.log(count);
-console.log("------------------------");
+*/
+//===============================
 
-let subject3 = ["JS", "React", "Angular"];
+/*
+// object properties and value
 
-// add anywhere
-const index = 2;
-console.log([...subject3.splice(0, index), "Vue", ...subject3.splice(0)]);
+console.log(this);
 
+let personInfo = {
+  name: "Sarang Jain",
+  id: "xherd123",
+  age: 30,
 
-console.log(subject3);
+  getInfo: function () {
+    console.log(this.name + this.id);
+    console.log(this);
+    // this is recommended
+    let test = () => {
+      console.log(this);
+    };
+  },
+
+  getInfo2() {
+    console.log(this.name + this.id);
+  },
+
+  // we have to avoid arrow fn as a property method
+  getInfo3: () => {
+    // console.log(this.name + this.id);
+  },
+
+  "abc 123": "I am a valid property",
+  100: "I am also a valid property",
+};
+
+console.log(personInfo);
+personInfo.getInfo();
+personInfo.getInfo2();
+personInfo.getInfo3();
+
+console.log(personInfo["name"]);
+console.log(personInfo["abc 123"]);
+console.log(personInfo["100"]);
+console.log("====================");
+console.log(personInfo["getInfo2"]());
 */
 
+//=================================
+
 /*
-subject3 ---> ["JS", "React", "Angular"]
-...subject3.splice(0, index) --> ["JS", "React"]
-subject3 ---> [ "Angular"]
+//object key shorthand and dynamic key
 
+let personInfo = {
+  name: "sarang jain",
+  id: "Xh123td",
+  age: 30,
+  getInfo: function () {
+    console.log(this.name, this.age);
+  },
+};
 
-Result(["JS", "React", "Vue" , "Angular"])
+console.log(personInfo);
+
+console.log("=============================");
+
+let myName = "sarang jain";
+let myId = "x123";
+let myage = 45;
+
+let personInfo2 = {
+  name: myName,
+  myId: myId,
+  age: myage,
+  getInfo: function () {
+    console.log(this.name, this.age);
+  },
+};
+
+console.log(personInfo2);
+
+console.log("=============================");
+let name = "abhishek";
+let id = "xz654";
+let age = 80;
+let mylatestage = 90;
+
+let personInfo3 = {
+  name, // name:name
+  id: id, // id
+  age,
+  mylatestagechanged: mylatestage,
+  getInfo: function (param) {
+    console.log(this.name, this.age, param);
+  },
+};
+
+console.log(personInfo3);
+
+personInfo3.getInfo("rishi");
+console.log("=============================");
+
+// api call getInformation()
+let lateteName;
+let latestId;
+let latestage;
+let key;
+
+function getInformation() {
+  // api call ---> inofmration
+  lateteName = "sarang jain"; // inofmration1
+  latestId = "asdc123"; // inofmration2
+  latestage = 35; // inofmration3
+  key = "updateage"; //// inofmration4
+}
+
+getInformation();
+
+let personInfo4 = {
+  lateteName: lateteName,
+  latestId: latestId,
+  [key]: latestage,
+};
+
+console.log(personInfo4[key]);
+
+console.log(personInfo4);
+
 */
-
-//=======================================================
-
-// add remove
+// ===============================
 
 /*
-let subject = ["Vue", "JS", "React", "Angular", "redux"];
+// Object destructuring
 
-// removing first elemnt --mutable way
+let couurseInformation = {
+  trainer: "sarang jain",
+  id: "webTrainer",
+  phoneNo: 9405034908,
+  city: "pune",
+  currentCourse: "react-js",
+  multipleCourse: {
+    JS: 15000,
+    react: 15000,
+    full: 20000,
+    jscontent: { 1: "baisc", 2: "advance", 3: "DOm" },
+  },
+};
 
-console.log(subject.shift());
+console.log(couurseInformation.multipleCourse.full);
+console.log(couurseInformation.multipleCourse.jscontent[3]);
+console.log("==================");
 
-console.log(subject);
+let { trainer, id, phoneNo, ...rest } = couurseInformation;
 
-// removing last elemnt --mutable way
+console.log(trainer);
+console.log(id);
+console.log(phoneNo);
+console.log(rest);
 
-console.log(subject.pop());
+//const currentCourse = "just for test";
 
-console.log(subject);
+let { city: mycity, currentCourse: current_course } = couurseInformation;
 
-// immutable way
-console.log("----------------");
+console.log(mycity);
 
-var test = [1, 2, 3, 4, 5];
-// test.slice(start index, last index);
-console.log(test.slice(0));
-console.log(test.slice(0, 2));
-console.log(test.slice(1, 4));
+console.log(current_course);
 
-console.log(test.slice(-1));
-console.log(test.slice(-2));
-console.log(test.slice(-3));
+console.log("==================");
 
-console.log(test.slice(-5, -3));
-console.log(test);
+let {
+  multipleCourse: { JS, react, full },
+} = couurseInformation;
 
-console.log("----------------");
-// remove from anywhere
-const index = 2;
-let subject2 = ["Vue", "JS", "React", "redux"];
+//console.log(multipleCourse);
 
-console.log([...subject2.slice(0, index), ...subject2.slice(index + 1)]);
-console.log(subject2);
+console.log(JS);
+console.log(react);
+console.log(full);
+// let { full: fullcoursefees } = multipleCourse;
+// console.log(fullcoursefees);
+
+=============================
+// Object property add and update
+
+let courseInformation = {
+  trainer: "sarang jain",
+  id: "web trainer",
+  phoneNo: 9405034908,
+  //  city: "pune",
+  //  currentCourse: "JS-react",
+  //  courseFree: { JS: 5000, react: 5000, full: 10000 },
+};
+
+// console.log(courseInformation);
+
+// courseInformation.city = "Gwalior";
+
+// console.log(courseInformation);
+
+// courseInformation.city = "pune";
+// console.log(courseInformation);
+
+// courseInformation["currentCourse"] = "js-react";
+// console.log(courseInformation);
+
+// courseInformation["currentCourse"] = "js-react-updated";
+// console.log(courseInformation);
+
+function addAndUpdateObj(prop, value) {
+  // checking exist or not
+  courseInformation[prop] = value;
+}
+
+addAndUpdateObj("city", "Pune"); // add city
+
+addAndUpdateObj("city", "Gwalior"); // update city
+
+addAndUpdateObj("id", "web trainer");
+
+addAndUpdateObj("courseFree", { JS: 5000, react: 5000, full: 10000 });
+
+addAndUpdateObj("state", "maharastra");
+console.log(courseInformation);
+
+// Object remove properties
+
+let courseInformation = {
+  trainer: "sarang jain",
+  id: "web trainer",
+  phoneNo: 9405034908,
+  city: "pune",
+  currentCourse: "JS-react",
+  courseFree: { JS: 5000, react: 5000, full: 10000 },
+};
+
+// delete keyword --> sow process, and recommended not to use
+delete courseInformation.city;
+delete courseInformation.trainer;
+
+console.log(courseInformation);
+
+// alternative way 1
+
+let { trainer, id, ...updatedInformation } = courseInformation;
+console.log(updatedInformation);
+
 */
