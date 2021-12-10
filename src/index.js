@@ -5,249 +5,183 @@ app.innerHTML = `
   <h1>Javascript Basic</h1>
 `;
 
-/** Object in depth */
-
 /*
 
-//1) object property and value exist or not
+1 Procedural Programming
+=========================
+Prcesural programming means no structure , no immutability maintain , no encapsulation no pattern , just whatever your need write accordingly.
 
-let courseInformation = {
-  trainer: "sarang jain",
-  id: "web trainer",
-  phoneNo: 7038757074,
-  city: "pune",
-  currentCourseName: "JS-react",
-};
 
-// property check and value also checked
-let city = "pune";
-if (courseInformation.city === "pune") {
-  console.log("do based on city");
-}
+02 Object Literals and Encapsulation
+=======================================
+we can make state , and behaviour wrap one place , which is too easy to understand rather than procedure programming.
 
-console.log("==================");
-// for in loop
+03 Object Literals and Factory Functions (abstraction , and reusability)
+==========================================
+A factory function is a pattern which allow us to construct and return a newly created object. it deoes not use new keyword like  class or function constructor , but still this gives us every time brand new object.
 
-for (let prop in courseInformation) {
-  console.log(prop);
-  console.log(courseInformation[prop]);
+// problem of muatbality , in this factory  we are getting reusablity ,
+//and abstraction but the problem is our state can be mutated outside
+// that is the big problem there. our state should not be changed from outside
 
-  if (courseInformation[prop] === city) {
-    console.log("do the basis of city pune");
-  }
-}
-console.log("==================");
 
-// valuse existance
-console.log(Object.values(courseInformation));
-
-const allValuesofInfo = Object.values(courseInformation);
-console.log(allValuesofInfo.includes(city));
-
-if (allValuesofInfo.includes(city)) {
-  console.log("do the basis of city pune");
-}
-
-console.log("==================");
-
-// propety check
-
-console.log(Object.keys(courseInformation));
-console.log(Object.keys(courseInformation).includes("phoneNo"));
-
-if (Object.keys(courseInformation).includes("phoneNo")) {
-  console.log("do the basis of phone no");
-}
-
-// using hasownproperty , not recpmmeed
-
-//console.log(courseInformation.hasOwnProperty("trainer"));
-console.log(Object.prototype.hasOwnProperty.call(courseInformation, "trainer"));
-
-*/
-/*
-==============
-//2) spread operator with Object
-
-var obj1 = { one: 1, two: 2, three: 3 };
-var obj2 = { four: 1, five: 2, six: 3 };
-
-var combineObj = { ...obj1, ...obj2, name: "sarang jain", two: 20, one: 10 };
-console.log(combineObj);
-
-// Object cloinig and breaking shallow copy and deep copy
-
-let courseInformation = {
-  trainer: "sarang jain",
-  id: "web trainer",
-  phoneNo: 7038757074,
-  city: "pune",
-  currentCourseName: "JS-react",
-  courseFees: { js: 15000, react: 15000, full: 30000 },
-};
-
-//let courseInformationRef = courseInformation;
-// shallow is pass , but fail in deep
-// let courseInformationRef = { ...courseInformation };
-// shallow is pass , but fail in deep
-// let courseInformationRef = Object.assign({}, courseInformation);
-
-let courseInformationJsonSTring = JSON.stringify(courseInformation);
-console.log(courseInformationJsonSTring);
-
-let courseInformationRef = JSON.parse(courseInformationJsonSTring);
-//console.log(courseInformationRef);
-
-courseInformationRef.trainer = "sarang kumar  jain";
-courseInformation.courseFees.full = 50000;
-
-console.log(courseInformation);
-console.log(courseInformationRef);
-
-*/
-
-//  Object merging , object.assign , spread operatr
-
-/*
-let courseInformation = {
-  trainer: "sarang jain",
-  id: "web trainer",
-  phoneNo: 7038757074,
-  city: "pune",
-  currentCourseName: "JS-react",
-  courseFees: { js: 15000, react: 15000, full: 30000 },
-};
+04  Frozen State and Immutable Patterns
+======================================
+Here we have solved the problem, where anyonce can not mutate out state , yes here any one can assign any new item , but can not cange existing state means can not be mutated.
 
 */
 
 /*
+// procedural programming
 
+// const cart = [];
 
+// const addToCart = (item) => {
+//   cart.push(item);
+// };
 
-let courseInformation = {
-  trainer: "sarang jain",
-  id: "web trainer",
-  phoneNo: 7038757074,
-  city: "pune",
+// const removeFromCart = (id) => {
+//   const index = cart.findIndex((item) => {
+//     return item.id === id;
+//   });
+
+//   cart.splice(index, 1);
+// };
+
+// let hotDog = { id: "🌭", name: "hot dog", price: 399 };
+
+// addToCart(hotDog);
+
+// setTimeout(() => {
+//   removeFromCart("🌭");
+//   console.log(cart);
+// }, 5000);
+
+// console.log(cart);
+*/
+
+/*
+//2) object literal and ecncapsilation with OOPs
+const cart = {
+  items: [],
+
+  add(item) {
+    this.items.push(item);
+  },
+
+  remove(id) {
+    const index = this.items.findIndex((item) => {
+      return item.id === id;
+    });
+
+    this.items.splice(index, 1);
+  },
 };
 
-let courseFees = { js: 15000, react: 15000, full: 30000 };
-//let courseFeesUpdatd = { courseFees };
-let currentCName = { currentCourseName: "JS-react" };
+let hotDog = { id: "🌭", name: "hot dog", price: 399 };
+let pizza = { id: "🍕", name: "cheese pizza", price: 999 };
 
-let courseInformationMerged = {
-  ...courseInformation,
-  ...currentCName,
-  ...{ courseFees },
-};
+cart.add(hotDog);
+cart.add(pizza);
+console.log(cart);
 
-console.log(courseInformationMerged);
-
-let courseInformationMerged2 = Object.assign(
-  {},
-  courseInformation,
-  { courseFees: courseFees },
-  currentCName
-);
-console.log(courseInformationMerged2);
-
-
-=========
+setTimeout(() => {
+  cart.remove("🍕");
+  console.log(cart);
+}, 3000);
 
 */
 
 /*
-//type checking in Object
+// 3) object literal and factory functions for the abstraction , and reusability
 
-let courseInformation = {
-  trainer: "sarang jain",
-  id: "web trainer",
-  phoneNo: 7038757074,
-  city: "pune",
-  currentCourseName: "JS-react",
+// const cart = {
+//   items: [],
+
+//   add(item) {
+//     this.items.push(item);
+//   },
+
+//   remove(id) {
+//     const index = this.items.findIndex((item) => {
+//       return item.id === id;
+//     });
+
+//     this.items.splice(index, 1);
+//   },
+// };
+
+// let hotDog = { id: "🌭", name: "hot dog", price: 399 };
+
+// let shooes = { id: "👞", name: "bata", price: 30 - 00 };
+
+// let tshirt = { id: "👕", name: "t shirt", price: 4000 };
+
+// cart.add(hotDog);
+// console.log(cart);
+
+const createCart = (items = []) => {
+  return {
+    items, // items:items
+
+    add(item) {
+      this.items.push(item);
+    },
+
+    remove(id) {
+      const index = this.items.findIndex((item) => {
+        return item.id === id;
+      });
+
+      this.items.splice(index, 1);
+    },
+  };
 };
 
-console.log(typeof courseInformation);
-console.log(typeof []);
-console.log(typeof null);
+let minicart = createCart([
+  { id: "🌭", name: "hot dog", price: 399 },
+  { id: "🍕", name: "cheese pizaa", price: 1000 },
+]);
 
-console.log(courseInformation instanceof Object);
-console.log({} instanceof Object);
-console.log(new Object() instanceof Object);
-console.log([] instanceof Object);
-console.log(null instanceof Object);
-console.log("sarang" instanceof String);
-console.log(new String("sarang") instanceof String);
-
-console.log(courseInformation.toString());
-
-console.log(Object.prototype.toString.call(courseInformation));
-console.log(Object.prototype.toString.call([]));
-console.log(Object.prototype.toString.call(null));
-console.log(Object.prototype.toString.call("sarang"));
-console.log(Object.prototype.toString.call(5));
-console.log(Object.prototype.toString.call(undefined));
-
-if (Object.prototype.toString.call(courseInformation) === "[object Object]") {
-  console.log("do work for object only");
-}
-
-function Skilledge() {}
-//class Skilledge {}
-
-var obj = new Skilledge();
-
-console.log(obj instanceof Skilledge);
-
-*/
-
-/*
-//  loop in Object using for in loop
-
-let courseInformation = {
-  trainer: "sarang jain",
-  id: "web trainer",
-  phoneNo: 7038757074,
-  city: "pune",
-  currentCourseName: "JS-react",
-  courseFees: { Js: 5000, react: 5000, full: 10000 },
-};
-
-for (let key in courseInformation) {
-  const value = courseInformation[key];
-  console.log(key);
-  console.log(value);
-  console.log("--------------------------");
-
-  console.log(Object.prototype.toString.call(value));
-
-  if (Object.prototype.toString.call(value) === "[object Object]") {
-    for (let prop in value) {
-      console.log(prop);
-      console.log(value[prop]);
-    }
-  }
-}
+minicart.items = [];
+console.log(minicart);
 
 */
 
 /*
 
-//loop in object using  array for each loop , and this is recommened
+6) frozen state and immutable patterns
 
-let courseInformation = {
-  trainer: "sarang jain",
-  id: "web trainer",
-  phoneNo: 7038757074,
-  city: "pune",
-  currentCourseName: "JS-react",
-  courseFees: { Js: 5000, react: 5000, full: 10000 },
+const createCart = (items = []) => {
+  return {
+    items: Object.freeze(items),
+    //items,
+
+    add(item) {
+      //this.items.push(item);
+      const state = [...items, item];
+      this.items = Object.freeze(state);
+    },
+
+    remove(id) {
+      // const index = this.items.findIndex((item) => {
+      //   return item.id === id;
+      // });
+
+      // this.items.splice(index, 1);
+
+      const state = this.items.filter((item) => item.id !== id);
+      this.items = Object.freeze(state);
+    },
+  };
 };
 
-console.log(Object.keys(courseInformation));
+let minicart = createCart([{ id: "🌭", name: "hot dog", price: 399 }]);
 
-Object.keys(courseInformation).forEach((key) => {
-  console.log(key);
-  console.log(courseInformation[key]);
-});
+//minicart.items.push("rishikesh");
+
+minicart.add({ id: "🍕", name: "cheese pizaa", price: 1000 });
+
+minicart.remove("🌭");
+
 */
