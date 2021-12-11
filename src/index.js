@@ -6,182 +6,203 @@ app.innerHTML = `
 `;
 
 /*
+ Prototypes and .__proto__ , and prototype chain , and inheritance achiving by protptypl way
+===============================================================================================
+A) inheritance achiving by protptypl way
+=========================================
+Inheritance means one object can access the properties and method of another object, this terminology called inheritance. 
 
-1 Procedural Programming
-=========================
-Prcesural programming means no structure , no immutability maintain , no encapsulation no pattern , just whatever your need write accordingly.
+We can achieve inheritance in different language by classical way or other ways, but in JavaScript it is archived by only prototypal way. 
 
+B) prototype and __proto__ ([[prototype]]) :-
+===========================================
+Every Object has prototype property , which keep the reference of another object.
+Every JavaScript object has a one prototype property (__proto__), which makes inheritance possible in JavaScript. 
 
-02 Object Literals and Encapsulation
-=======================================
-we can make state , and behaviour wrap one place , which is too easy to understand rather than procedure programming.
+C) prototype chain 
+=====================
+When a certain method or property is called , the search starts in the object itself first , if it is not found , theSearch moves on the object's prototype(__Proto__), its continue until the method or properties is found that is called prototype chain.
 
-03 Object Literals and Factory Functions (abstraction , and reusability)
-==========================================
-A factory function is a pattern which allow us to construct and return a newly created object. it deoes not use new keyword like  class or function constructor , but still this gives us every time brand new object.
-
-// problem of muatbality , in this factory  we are getting reusablity ,
-//and abstraction but the problem is our state can be mutated outside
-// that is the big problem there. our state should not be changed from outside
-
-
-04  Frozen State and Immutable Patterns
-======================================
-Here we have solved the problem, where anyonce can not mutate out state , yes here any one can assign any new item , but can not cange existing state means can not be mutated.
+Note:-
+======
+Never ever use __proto__ property , it is not for us, it is used by JS internally.
+Every function has two prototype property (prototype) and (__prto__).
+Developer will always  use prototype property(prototype) property not prototype(__proto__) property , both has same purpose . 
+The Prototype property(prototype) in function is where we put methods and properties that we want in other object to inherit.
 
 */
 
 /*
-// procedural programming
 
-// const cart = [];
+// __proto__ [[prototype]] property
 
-// const addToCart = (item) => {
-//   cart.push(item);
-// };
+let myOBj = {};
+let myArray = [];
+let myFUnction = function () {};
 
-// const removeFromCart = (id) => {
-//   const index = cart.findIndex((item) => {
-//     return item.id === id;
-//   });
+console.log(myOBj);
+console.log(myOBj.__proto__);
 
-//   cart.splice(index, 1);
-// };
+console.log("=====================");
 
-// let hotDog = { id: "🌭", name: "hot dog", price: 399 };
+console.log(myArray);
+console.log(myArray.__proto__);
 
-// addToCart(hotDog);
+console.log("=====================");
 
-// setTimeout(() => {
-//   removeFromCart("🌭");
-//   console.log(cart);
-// }, 5000);
+console.dir(myFUnction);
+console.dir(myFUnction.__proto__);
 
-// console.log(cart);
+
+====================================
 */
 
 /*
-//2) object literal and ecncapsilation with OOPs
-const cart = {
-  items: [],
+// protytype chain
 
-  add(item) {
-    this.items.push(item);
+let obj_1 = {
+  prop1: "I am prop1",
+  // [[prototype]] / __proto__ : {}
+};
+
+let obj_2 = {
+  prop2: "I am prop2",
+  // [[prototype]] / __proto__ : {}
+};
+
+let obj_3 = {
+  prop3: "I am a prop3",
+  // [[prototype]] / __proto__ : {}
+};
+
+obj_1.__proto__ = obj_2;
+obj_2.__proto__ = obj_3;
+
+console.log(obj_1);
+
+console.log(obj_1.prop1);
+console.log(obj_1.prop2);
+console.log(obj_1.prop3);
+console.log(obj_1.prop4);
+*/
+
+/*
+=============================================================
+
+
+// why classes function constructor a,d blueprint are needed
+
+
+
+
+let emp1 = {
+  firstname: "sarang",
+  lastname: "jain",
+  age: 35,
+  getfullInformation() {
+    console.log(this.firstname + this.lastname + this.age);
   },
+};
 
-  remove(id) {
-    const index = this.items.findIndex((item) => {
-      return item.id === id;
-    });
-
-    this.items.splice(index, 1);
+let emp2 = {
+  firstname: "rrishi",
+  lastname: "shrivastava",
+  age: 28,
+  getfullInformation() {
+    console.log(this.firstname + this.lastname + this.age);
   },
 };
 
-let hotDog = { id: "🌭", name: "hot dog", price: 399 };
-let pizza = { id: "🍕", name: "cheese pizza", price: 999 };
+let emp3 = {
+  firstname: "rrishi",
+  lastname: "shrivastava",
+  age: 28,
+  getfullInformation() {
+    console.log(this.firstname + this.lastname + this.age);
+  },
+};
 
-cart.add(hotDog);
-cart.add(pizza);
-console.log(cart);
+console.log(emp1);
+console.log(emp2);
+console.log(emp3);
 
-setTimeout(() => {
-  cart.remove("🍕");
-  console.log(cart);
-}, 3000);
+console.log("=========================");
+
+function Employee(firstname, lastname, age) {
+  this.firstname = firstname;
+  this.lastname = lastname;
+  this.age = age;
+  this.getfullInformation = function () {
+    console.log(this.firstname + this.lastname + this.age);
+  };
+}
+
+let emp4 = new Employee("amar", "sjharma", 40);
+let emp5 = new Employee("abhsihe", "gupta", 45);
+let emp6 = new Employee("kanupriya", "jain", 20);
+
+console.log(emp4);
+console.log(emp5);
+console.log(emp6);
+
+
+
+=================================
 
 */
 
-/*
-// 3) object literal and factory functions for the abstraction , and reusability
-
-// const cart = {
-//   items: [],
-
-//   add(item) {
-//     this.items.push(item);
-//   },
-
-//   remove(id) {
-//     const index = this.items.findIndex((item) => {
-//       return item.id === id;
-//     });
-
-//     this.items.splice(index, 1);
-//   },
-// };
-
-// let hotDog = { id: "🌭", name: "hot dog", price: 399 };
-
-// let shooes = { id: "👞", name: "bata", price: 30 - 00 };
-
-// let tshirt = { id: "👕", name: "t shirt", price: 4000 };
-
-// cart.add(hotDog);
-// console.log(cart);
-
-const createCart = (items = []) => {
-  return {
-    items, // items:items
-
-    add(item) {
-      this.items.push(item);
-    },
-
-    remove(id) {
-      const index = this.items.findIndex((item) => {
-        return item.id === id;
-      });
-
-      this.items.splice(index, 1);
-    },
-  };
-};
-
-let minicart = createCart([
-  { id: "🌭", name: "hot dog", price: 399 },
-  { id: "🍕", name: "cheese pizaa", price: 1000 },
-]);
-
-minicart.items = [];
-console.log(minicart);
-
-*/
 
 /*
+=================================
 
-6) frozen state and immutable patterns
 
-const createCart = (items = []) => {
-  return {
-    items: Object.freeze(items),
-    //items,
+// how we write the classes
 
-    add(item) {
-      //this.items.push(item);
-      const state = [...items, item];
-      this.items = Object.freeze(state);
-    },
-
-    remove(id) {
-      // const index = this.items.findIndex((item) => {
-      //   return item.id === id;
-      // });
-
-      // this.items.splice(index, 1);
-
-      const state = this.items.filter((item) => item.id !== id);
-      this.items = Object.freeze(state);
-    },
+function Emplyee(fn, ln, ag) {
+  this.firstname = fn;
+  this.lastname = ln;
+  this.age = ag;
+  this.getname = function () {
+    console.log(this.firstname);
   };
+  this.getfulEmployeeInformation = function () {
+    console.log(this.firstname + "" + this.lastname + this.age);
+  };
+}
+
+let emp1 = new Emplyee("sarang", "jain", 33);
+console.log(emp1);
+
+
+
+// problems in this class we never have to write method inside the class , we have to write inside the parent prototype
+
+function Emplyee(fn, ln, ag) {
+  this.firstname = fn;
+  this.lastname = ln;
+  this.age = ag;
+}
+
+// this is  recommneded way  for method
+Emplyee.prototype.getname = function () {
+  console.log(this.firstname);
 };
 
-let minicart = createCart([{ id: "🌭", name: "hot dog", price: 399 }]);
+Emplyee.prototype.getfulEmployeeInformation = function () {
+  console.log(this.firstname + "" + this.lastname + this.age);
+};
 
-//minicart.items.push("rishikesh");
+console.dir(Emplyee);
 
-minicart.add({ id: "🍕", name: "cheese pizaa", price: 1000 });
+let emp1 = new Emplyee("sarang", "jain", 33);
+// emp1.__proto__ = Emplyee.prototype  ---> behind the scene JS is doing for us
+console.log(emp1);
+emp1.getname();
+emp1.getfulEmployeeInformation();
 
-minicart.remove("🌭");
+let emp2 = new Emplyee("rishi", "shrivastava", 33);
+// emp2.__proto__ = Employee.prototype ---> behind the scene JS is doing for us
+console.log(emp2);
+
 
 */
