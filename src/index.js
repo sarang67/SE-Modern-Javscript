@@ -5,204 +5,237 @@ app.innerHTML = `
   <h1>Javascript Basic</h1>
 `;
 
+// interview purpose : Inheritance achiving in ES5
+
 /*
-// private property and static class member
 
-class Cart {
-  // declare the members prposal of the property
-  #items; // private property ---> can be used inside the class , not outside the class
-  property1;
+ one object can acces the member (propert and method) from another object
+ (resusablity , maintainbility , sclaibility)
 
-  // static property or utility property
-  static name = "cart class";
-  static methodfn() {
-    console.log(
-      "I am a static function , i can be used directly from the class name"
-    );
-  }
+  parent class --> Human --> property ---> firstname , lastname , age
+                           --> method   --> getfirstname() --> this.firstname
+                           --> method   --> getfullName() --> firstname + lastname
+          
+                                
 
-  constructor(items = []) {
-    // inilization
-    this.#items = Object.freeze(items);
-    this.property1 = "inilized";
-  }
+    child  class --> Employee --> Property --> salary 
+                              method   --> getsalary() --> salary
+                              method   --> getfullInformation() -->   firstname , lastname , age , salary                   
 
-  add(item) {
-    const state = [...this.#items, item];
-    this.#items = Object.freeze(state);
-  }
-  remove(id) {
-    const state = this.#items.filter((item) => item.id !== id);
-    this.#items = Object.freeze(state);
-  }
-}
 
-const cart = new Cart();
-const hotdog = { id: "🌭", name: "Posh Dog", price: 399 };
-cart.add(hotdog);
+  super() ---> callimd the parent constructor from child class
 
-console.log(cart);
-//console.log(cart.#items);
+  this is the rule whenever you are doing inheritance , you must have to call parent constructor from child constructor using super function
 
-console.log(Cart.name);
-console.log(Cart.methodfn());
-
-console.dir(Cart);
-
-// class MathUtility
-
-class MathUtility {
-  static pi = 3.14;
-  static inch = "some unit";
-  static cm = "some unint";
-}
-
-console.dir(MathUtility);
 */
 
 /*
-/// setter and getter
-=================
-// getter setter
-class Cart {
-  #items;
-  // static property or utility property
+class Human {
+  firstname;
+  lastname;
+  age;
 
-  constructor(items = []) {
-    this.value = items; //  set value(items)
+  constructor(fn, ln, ag) {
+    this.firstname = fn;
+    this.lastname = ln;
+    this.age = ag;
   }
 
-  set value(items) {
-    this.#items = Object.freeze(items);
+  getfirstname() {
+    console.log(this.firstname);
   }
 
-  get value() {
-    return this.#items;
-  }
-
-  add(item) {
-    const state = [...this.value, item]; // get value()
-    this.value = Object.freeze(state); //set value(items)
-  }
-
-  remove(id) {
-    const state = this.value.filter((item) => item.id !== id); // // get value()
-    this.value = Object.freeze(state); // set value(items)
-  }
-
-  get count() {
-    return this.#items.length;
-  }
-
-  dispalycount() {
-    console.log(this.#items.length);
+  getfullName() {
+    console.log(this.firstname + this.lastname);
   }
 }
 
-const cart = new Cart();
-const hotdog = { id: "🌭", name: "Posh Dog", price: 399 };
-cart.add(hotdog);
+class Employee extends Human {
+  salary;
+  constructor(fn, ln, ag, sal) {
+    super(fn, ln, ag);
+    this.salary = sal;
+  }
 
-console.log(cart.dispalycount());
+  getsalary() {
+    console.log(this.salary);
+  }
 
-console.log(cart.value); // get value();
-console.log(cart.count); // get count()
-============================================
+  getfullInformation() {
+    console.log(this.firstname + this.lastname + this.salary + this.age);
+  }
+}
+
+const emp1 = new Employee("sarang", "jain", 32, 50000);
+// emp1.___proto = Employee.prototype
+
+ //  Employee.prototype : { getsalary() , getfullInformation()}
+
+ 
+
+console.log(emp1);
+
+console.log(emp1 instanceof Employee);
+console.log(emp1 instanceof Human);
+console.log(emp1 instanceof Object);
 */
 
 /*
 
-// Inheritance : - one object can access the property of another object
-class Cart {
-  items;
-  constructor(items = []) {
-    this.value = items; //  set value(items)
-  }
+ one object can acces the member (propert and method) from another object
+ (resusablity , maintainbility , sclaibility)
 
-  set value(items) {
-    this.items = Object.freeze(items);
-  }
+  parent class --> Human --> property ---> firstname , lastname , age
+                           --> method   --> getfirstname() --> this.firstname
+                           --> method   --> getfullName() --> firstname + lastname
+          
+                                
 
-  get value() {
-    return this.items;
-  }
+    child  class --> Employee --> Property --> salary 
+                              method   --> getsalary() --> salary
+                              method   --> getfullInformation() -->   firstname , lastname , age , salary                   
 
-  add(item) {
-    const state = [...this.value, item]; // get value()
-    this.value = Object.freeze(state); //set value(items)
-  }
 
-  remove(id) {
-    const state = this.value.filter((item) => item.id !== id); // // get value()
-    this.value = Object.freeze(state); // set value(items)
-  }
+  super() ---> callimd the parent constructor from child class
+
+  this is the rule whenever you are doing inheritance , you must have to call parent constructor from child constructor using super function
+
+*/
+
+/*
+function Human(fn, ln, ag) {
+  this.firstname = fn;
+  this.lastname = ln;
+  this.age = ag;
 }
 
-const cart = new Cart();
+// Human.prototype = {getfirstname() , getfullName()}
 
-class Product {
-  id;
-  name;
-  price;
-  constructor(id, name, price) {
-    this.id = id;
-    this.name = name;
-    this.price = price;
-  }
-  get displayName() {
-    return `${this.id} ${this.name}`;
-  }
+Human.prototype.getfirstname = function () {
+  console.log(this.firstname);
+};
+
+Human.prototype.getfullName = function () {
+  console.log(this.firstname + this.lastname);
+};
+
+var vasu = new Human("vasu", "shrivastava", 25);
+
+// ==============================
+
+function Employee(fn, ln, ag, sl) {
+  Human.call(this, fn, ln, ag); // this line inheritedd all the property members of parent , not method
+  this.salary = sl;
 }
 
-// food class inheriting Product class
-class Food extends Product {
-  // i will handle extra array
-  constructor(id, name, price, extra) {
-    // yu are calling parent class constructor
-    super(id, name, price);
-    this.extra = extra;
-  }
-}
+Employee.prototype = Human.prototype;
 
-// Drink class inheriting product class
+Employee.prototype = Human.prototype; // this line inheritedd all the property member (method)
 
-class Drink extends Product {
-  // i will handle extra string
-  constructor(id, name, price, extra) {
-    super(id, name, price);
-    this.extra = extra;
-  }
-}
+Employee.prototype = new Human(); //--> not recommnede
 
-//const hotdog = { id: "🌭", name: "Posh Dog", price: 399 };
-//const hotdog = new Product("🌭", "Posh Dog", 399, ["pickles"]);
-//const burger = new Product("🍔", "super burger", 449, ["custored", "onion"]);
+Employee.prototype.getsalary = function () {
+  console.log(this.salary);
+};
 
-const hotdog = new Food("🌭", "Posh Dog", 399, ["pickles"]);
-const burger = new Food("🍔", "super burger", 449, ["custored", "onion"]);
+Employee.prototype.getFullInformation = function () {
+  console.log(this.firstname + this.lastname + this.age + this.salary);
+};
 
-//const smallDrink = new Product("🥂", "small slurp", 199, "small");
-//const mediumDrink = new Product("🍷", "medium slurp", 199, "medium");
-//const largeDrink = new Product("🍾", "large slurp", 199, "large");
+let emp1 = new Employee("sarang", "jain", 32, 5000);
+// emp1.__proto__ = Employee.prototype
+console.log(emp1);
+//emp1.getFullInformation();
 
-const smallDrink = new Drink("🥂", "small slurp", 199, "small");
-const mediumDrink = new Drink("🍷", "medium slurp", 199, "medium");
-const largeDrink = new Drink("🍾", "large slurp", 199, "large");
+emp1.getfullName();
 
-cart.add(hotdog);
-cart.add(burger);
-cart.add(smallDrink);
-cart.add(mediumDrink);
-cart.add(largeDrink);
-console.log(cart);
+*/
 
-console.log(hotdog);
+/*
+===========================================
+// DOM ----> DOCUMENT OBJECT MODEL
 
-console.log(hotdog instanceof Food);
-console.log(hotdog instanceof Product);
+//  what is dom nodes
+// console.log(document);
+// console.dir(document);
 
-//
-console.log([] instanceof Array);
-console.log([] instanceof Object);
+// // html nodes
+// console.log(document.documentElement);
+// console.dir(document.documentElement);
+
+// // body nodes
+// console.log(document.body);
+// console.dir(document.body);
+
+// // head node
+// console.log(document.head);
+// console.dir(document.head);
+
+console.log("--------------------------------------------");
+
+console.dir(document.body instanceof HTMLBodyElement);
+console.dir(document.body instanceof HTMLElement);
+console.dir(document.body instanceof Element);
+console.dir(document.body instanceof Node);
+console.dir(document.body instanceof EventTarget);
+
+console.dir(app);
+
+
+
+// Nodetype --> number
+console.log(document.body.nodeType);
+console.log(document.nodeType);
+
+// nodetype name
+console.log(document.body.nodeName);
+console.log(document.nodeName);
+
+// tagname
+console.log(document.body.tagName);
+console.log(document.tagName);
+
+*/
+
+/*Node Type
+https://www.w3schools.com/jsref/prop_node_nodetype.asp
+1	Element	
+2	Attr	
+3	Text	
+4	CDATASection	
+5	EntityReference	
+6	Entity	
+7	ProcessingInstruction	
+8	Comment	
+9	Document	
+10	DocumentType	
+11 	DocumentFragment	
+12	Notation
+*/
+
+/*
+
+// how to create nodes.
+
+const div = document.createElement("div");
+const text = document.createTextNode("this is dom");
+const comment = document.createComment("This is my commment");
+
+// append --> we can put inside the node others node
+
+div.append(text);
+app.append(div);
+app.append(comment);
+
+let myul = document.createElement("ul");
+let li = document.createElement("li");
+let liText = document.createTextNode("I am li text");
+
+li.append(liText);
+myul.append(li);
+
+console.log(myul);
+
+app.append(myul);
 
 */
