@@ -5,237 +5,222 @@ app.innerHTML = `
   <h1>Javascript Basic</h1>
 `;
 
-// interview purpose : Inheritance achiving in ES5
+
 
 /*
 
- one object can acces the member (propert and method) from another object
- (resusablity , maintainbility , sclaibility)
-
-  parent class --> Human --> property ---> firstname , lastname , age
-                           --> method   --> getfirstname() --> this.firstname
-                           --> method   --> getfullName() --> firstname + lastname
-          
-                                
-
-    child  class --> Employee --> Property --> salary 
-                              method   --> getsalary() --> salary
-                              method   --> getfullInformation() -->   firstname , lastname , age , salary                   
+// setter dom content......
 
 
-  super() ---> callimd the parent constructor from child class
+console.log(app);
 
-  this is the rule whenever you are doing inheritance , you must have to call parent constructor from child constructor using super function
+app.innerHTML = `
+  <h1>JavaScript DOM</h1>
+`;
 
+
+//app.innerText = "<h1>JavaScript DOM</h1>";
+
+let h1Tag = document.createElement("h1");
+h1Tag.innerText = "This is Dom class";
+
+
+app.append(h1Tag);
+
+// getter dom content......
+
+// gives the full html visible or onvisible.
+console.log(app.innerHTML);
+// give the text , remove whitespaces. only return visible text
+// applies on Elements
+console.log(app.innerText);
+// give the full text (visible or invisible), inclusing whitespaces etc
+// aplies on nodes
+console.log(app.textContent);
 */
 
+
 /*
-class Human {
-  firstname;
-  lastname;
-  age;
+// creating dom node using innerHtml with literal string v/s createelement
 
-  constructor(fn, ln, ag) {
-    this.firstname = fn;
-    this.lastname = ln;
-    this.age = ag;
-  }
+// create dom node using createelement
 
-  getfirstname() {
-    console.log(this.firstname);
-  }
+// { label, type } = { label: "First name", type: "text" } // destructring
+function createInputElement({ label, type }) {
+  const labelElem = document.createElement("label"); // <lable></label>
+  const inputElem = document.createElement("input"); // <input >
 
-  getfullName() {
-    console.log(this.firstname + this.lastname);
-  }
+  labelElem.innerText = label; // <lable>First name</label>
+  inputElem.type = type; // <input type="text">
+  labelElem.append(inputElem); // <lable>First name <input type="text"></label>
+
+  //console.log(labelElem, inputElem);
+
+  return labelElem;
 }
 
-class Employee extends Human {
-  salary;
-  constructor(fn, ln, ag, sal) {
-    super(fn, ln, ag);
-    this.salary = sal;
-  }
+const nameField = createInputElement({ label: "First name", type: "text" });
+console.log(nameField);
+app.append(nameField);
 
-  getsalary() {
-    console.log(this.salary);
-  }
+// create dom node  using innerHtml with literal string
 
-  getfullInformation() {
-    console.log(this.firstname + this.lastname + this.salary + this.age);
-  }
+function createInputElement2({ label, type }) {
+  return `
+      <label>
+         ${label}
+         <input type="${type}">
+      </label>
+  `;
 }
 
-const emp1 = new Employee("sarang", "jain", 32, 50000);
-// emp1.___proto = Employee.prototype
+const passwordField = createInputElement2({
+  label: "passwrd please",
+  type: "password",
+});
 
- //  Employee.prototype : { getsalary() , getfullInformation()}
+console.log(passwordField);
+app.innerHTML += passwordField;
 
- 
 
-console.log(emp1);
-
-console.log(emp1 instanceof Employee);
-console.log(emp1 instanceof Human);
-console.log(emp1 instanceof Object);
+=================================================
 */
 
 /*
 
- one object can acces the member (propert and method) from another object
- (resusablity , maintainbility , sclaibility)
-
-  parent class --> Human --> property ---> firstname , lastname , age
-                           --> method   --> getfirstname() --> this.firstname
-                           --> method   --> getfullName() --> firstname + lastname
-          
-                                
-
-    child  class --> Employee --> Property --> salary 
-                              method   --> getsalary() --> salary
-                              method   --> getfullInformation() -->   firstname , lastname , age , salary                   
-
-
-  super() ---> callimd the parent constructor from child class
-
-  this is the rule whenever you are doing inheritance , you must have to call parent constructor from child constructor using super function
-
-*/
-
-/*
-function Human(fn, ln, ag) {
-  this.firstname = fn;
-  this.lastname = ln;
-  this.age = ag;
-}
-
-// Human.prototype = {getfirstname() , getfullName()}
-
-Human.prototype.getfirstname = function () {
-  console.log(this.firstname);
-};
-
-Human.prototype.getfullName = function () {
-  console.log(this.firstname + this.lastname);
-};
-
-var vasu = new Human("vasu", "shrivastava", 25);
-
-// ==============================
-
-function Employee(fn, ln, ag, sl) {
-  Human.call(this, fn, ln, ag); // this line inheritedd all the property members of parent , not method
-  this.salary = sl;
-}
-
-Employee.prototype = Human.prototype;
-
-Employee.prototype = Human.prototype; // this line inheritedd all the property member (method)
-
-Employee.prototype = new Human(); //--> not recommnede
-
-Employee.prototype.getsalary = function () {
-  console.log(this.salary);
-};
-
-Employee.prototype.getFullInformation = function () {
-  console.log(this.firstname + this.lastname + this.age + this.salary);
-};
-
-let emp1 = new Employee("sarang", "jain", 32, 5000);
-// emp1.__proto__ = Employee.prototype
-console.log(emp1);
-//emp1.getFullInformation();
-
-emp1.getfullName();
-
-*/
-
-/*
-===========================================
-// DOM ----> DOCUMENT OBJECT MODEL
-
-//  what is dom nodes
-// console.log(document);
-// console.dir(document);
-
-// // html nodes
-// console.log(document.documentElement);
-// console.dir(document.documentElement);
-
-// // body nodes
-// console.log(document.body);
-// console.dir(document.body);
-
-// // head node
-// console.log(document.head);
-// console.dir(document.head);
-
-console.log("--------------------------------------------");
-
-console.dir(document.body instanceof HTMLBodyElement);
-console.dir(document.body instanceof HTMLElement);
-console.dir(document.body instanceof Element);
-console.dir(document.body instanceof Node);
-console.dir(document.body instanceof EventTarget);
-
-console.dir(app);
-
-
-
-// Nodetype --> number
-console.log(document.body.nodeType);
-console.log(document.nodeType);
-
-// nodetype name
-console.log(document.body.nodeName);
-console.log(document.nodeName);
-
-// tagname
-console.log(document.body.tagName);
-console.log(document.tagName);
-
-*/
-
-/*Node Type
-https://www.w3schools.com/jsref/prop_node_nodetype.asp
-1	Element	
-2	Attr	
-3	Text	
-4	CDATASection	
-5	EntityReference	
-6	Entity	
-7	ProcessingInstruction	
-8	Comment	
-9	Document	
-10	DocumentType	
-11 	DocumentFragment	
-12	Notation
-*/
-
-/*
-
-// how to create nodes.
+// inserting dom elements (node)
 
 const div = document.createElement("div");
-const text = document.createTextNode("this is dom");
-const comment = document.createComment("This is my commment");
+const span = document.createElement("span");
+const p = document.createElement("p");
+const i = document.createElement("i");
+const b = document.createElement("b");
 
-// append --> we can put inside the node others node
+//append --> last child
+div.append(span);
+//div.append(p);
+// prepend ---> opposite od append --> first child node
+div.prepend(i);
+//div.prepend(b);
 
-div.append(text);
+span.after(p);
+span.before(b);
+
 app.append(div);
-app.append(comment);
+console.log(app);
 
-let myul = document.createElement("ul");
-let li = document.createElement("li");
-let liText = document.createTextNode("I am li text");
+*/
 
-li.append(liText);
-myul.append(li);
+/*
+=============================
 
-console.log(myul);
+app.innerHTML = `
+  <h1>Javascript Basic</h1>
 
-app.append(myul);
+  <ul id="myUl">
+   <li>1</li>
+  </ul>
+`;
+
+// inserting string template
+const ulElement = document.getElementById("myUl");
+console.log(ulElement);
+
+ulElement.insertAdjacentHTML("beforebegin", `<p>My onordered list</p>`);
+ulElement.insertAdjacentHTML("afterbegin", `<li>first item position</li>`);
+ulElement.insertAdjacentHTML("beforeend", `<li>last item position</li>`);
+ulElement.insertAdjacentHTML("afterend", `<p> list is completed</p>`);
+
+
+/*
+app.innerHTML = `
+  <h1>Javascript Basic</h1>
+  <div id="divElem">
+     Relpace me
+  </div>
+`;
+
+// replacing dom element
+const divElem = document.getElementById("divElem");
+console.log(divElem);
+
+const newdiv = document.createElement("div");
+newdiv.innerText = "i will replace";
+
+console.log(newdiv);
+
+setTimeout(() => {
+  divElem.replaceWith(newdiv);
+}, 2000);
+
+const anotherUL = document.createElement("ul");
+setTimeout(() => {
+  newdiv.replaceWith(anotherUL);
+}, 3000);
+
+*/
+/*
+======================
+// cloning the dom
+
+const div = document.createElement("div");
+const span = document.createElement("span");
+
+span.innerText = "can you clone me ?";
+div.append(span);
+
+console.log(div);
+app.append(div);
+
+const clone = div.cloneNode(false);
+console.log(clone);
+
+const cloneDeep = div.cloneNode(true);
+console.log(cloneDeep);
+
+app.append(cloneDeep);
+console.log("----------------");
+const appclonne = app.cloneNode(true);
+console.log(appclonne);
+
+app.append(appclonne);
+
+*/
+
+/*
+=======
+// removing dom nodes
+
+const div = document.createElement("div");
+div.innerText = "I am message";
+
+app.append(div);
+
+setTimeout(() => {
+  div.remove();
+  app.remove();
+}, 2000);
+
+*/
+
+/*
+
+=======================assignment=========
+app.innerHTML = `
+  <h1>Javascript Basic</h1>
+  <div id="family">
+    Family detaail
+  <div>
+`;
+
+// using inerHtml and using createElement
+
+// 1) create node for father name insert 
+// 2) create node for mother name insert first postion
+// 3) sister name from starting div
+// 4) brother name after div
+// 5) clone and you need to insert inside body
+// 6) you need to delete father name
+// 7) uyou have to replace your mother name with full name "mrs xyz abc surname"
 
 */
