@@ -5,222 +5,167 @@ app.innerHTML = `
   <h1>Javascript Basic</h1>
 `;
 
-
-
+// ============== Querying in the DOM ======================
 /*
-
-// setter dom content......
-
-
-console.log(app);
+// Querying DOM Nodes (HTMLCollections)getElementById : this will give live data
 
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
+  <ul id="ulElement" class="ul-list"></ul>
 `;
 
+const ulElem = document.getElementById("ulElement");
 
-//app.innerText = "<h1>JavaScript DOM</h1>";
+const names = ["sarang", "manish", "kk", "amar"];
 
-let h1Tag = document.createElement("h1");
-h1Tag.innerText = "This is Dom class";
-
-
-app.append(h1Tag);
-
-// getter dom content......
-
-// gives the full html visible or onvisible.
-console.log(app.innerHTML);
-// give the text , remove whitespaces. only return visible text
-// applies on Elements
-console.log(app.innerText);
-// give the full text (visible or invisible), inclusing whitespaces etc
-// aplies on nodes
-console.log(app.textContent);
-*/
-
-
-/*
-// creating dom node using innerHtml with literal string v/s createelement
-
-// create dom node using createelement
-
-// { label, type } = { label: "First name", type: "text" } // destructring
-function createInputElement({ label, type }) {
-  const labelElem = document.createElement("label"); // <lable></label>
-  const inputElem = document.createElement("input"); // <input >
-
-  labelElem.innerText = label; // <lable>First name</label>
-  inputElem.type = type; // <input type="text">
-  labelElem.append(inputElem); // <lable>First name <input type="text"></label>
-
-  //console.log(labelElem, inputElem);
-
-  return labelElem;
-}
-
-const nameField = createInputElement({ label: "First name", type: "text" });
-console.log(nameField);
-app.append(nameField);
-
-// create dom node  using innerHtml with literal string
-
-function createInputElement2({ label, type }) {
-  return `
-      <label>
-         ${label}
-         <input type="${type}">
-      </label>
-  `;
-}
-
-const passwordField = createInputElement2({
-  label: "passwrd please",
-  type: "password",
+names.forEach((name) => {
+  const liItem = document.createElement("li");
+  liItem.textContent = name;
+  liItem.className = "li-list";
+  ulElem.append(liItem);
 });
 
-console.log(passwordField);
-app.innerHTML += passwordField;
+console.dir(ulElem);
 
+//getElementsByClassName :  HTMLCollection live collection
+const listByClassname = document.getElementsByClassName("li-list");
+console.log(listByClassname);
 
-=================================================
+// getElementBYTagname :  HTMLCollection live collection
+
+const listByTagname = document.getElementsByTagName("li");
+console.log(listByTagname);
+
+const newFriend = `<li class="li-list">vasu</li>`;
+ulElem.innerHTML += newFriend;
+
+console.log("===================");
+console.log(listByTagname);
+console.log(listByClassname);
+
+// ======================
 */
 
 /*
 
-// inserting dom elements (node)
-
-const div = document.createElement("div");
-const span = document.createElement("span");
-const p = document.createElement("p");
-const i = document.createElement("i");
-const b = document.createElement("b");
-
-//append --> last child
-div.append(span);
-//div.append(p);
-// prepend ---> opposite od append --> first child node
-div.prepend(i);
-//div.prepend(b);
-
-span.after(p);
-span.before(b);
-
-app.append(div);
-console.log(app);
-
-*/
-
-/*
-=============================
+// Querying DOM Nodes (NodeLists)---> this gives snapshot
 
 app.innerHTML = `
-  <h1>Javascript Basic</h1>
-
-  <ul id="myUl">
-   <li>1</li>
-  </ul>
+  <h1>JavaScript DOM</h1>
+  <ul id="ulElement" class="ul-list"></ul>
 `;
 
-// inserting string template
-const ulElement = document.getElementById("myUl");
-console.log(ulElement);
+// const ulElem = document.getElementById("ulElement");
 
-ulElement.insertAdjacentHTML("beforebegin", `<p>My onordered list</p>`);
-ulElement.insertAdjacentHTML("afterbegin", `<li>first item position</li>`);
-ulElement.insertAdjacentHTML("beforeend", `<li>last item position</li>`);
-ulElement.insertAdjacentHTML("afterend", `<p> list is completed</p>`);
+const ulElem = document.querySelector("ul");
+console.log(ulElem);
+//#ulElement {}
+// .ulElement {}
+// ul li
 
+const names = ["sarang", "manish", "kk", "amar"];
+
+names.forEach((name) => {
+  const liItem = document.createElement("li");
+  liItem.textContent = name;
+  liItem.className = "li-list";
+  ulElem.append(liItem);
+});
+
+console.dir(ulElem);
+
+//querySelectorAll :nodeList
+
+const ulElemAll = document.querySelectorAll("li");
+console.log(ulElemAll);
+
+const ulElemt = `<li class="li-list">rishi</li>`;
+ulElem.innerHTML += ulElemt;
+
+console.log("===================");
+console.log(ulElemAll);
+
+const ulElemAllAgain = document.querySelectorAll("li");
+console.log(ulElemAllAgain);
+
+*/
+
+//=================
+
+// Looping over DOM Elements
 
 /*
+import "../assets/css/style.css";
+
+const app = document.getElementById("app");
 app.innerHTML = `
-  <h1>Javascript Basic</h1>
-  <div id="divElem">
-     Relpace me
-  </div>
+  <h1>JavaScript DOM</h1>
+  <ul id="ulElem" class="ul-list">
+    <li class="li-list">Sarng</li>
+    <li class="li-list">Saurabh</li>
+    <li class="li-list">manish</li>
+    <li class="li-list">kk</li>
+ </ul>
 `;
 
-// replacing dom element
-const divElem = document.getElementById("divElem");
-console.log(divElem);
+const ulLiElementList = document.querySelectorAll(".li-list");
+console.log(ulLiElementList);
 
-const newdiv = document.createElement("div");
-newdiv.innerText = "i will replace";
+console.log("===for loop====");
+for (let i = 0; i < ulLiElementList.length; i++) {
+  console.log(ulLiElementList[i]);
+}
 
-console.log(newdiv);
+console.log("===for..of====");
+for (let item of ulLiElementList) {
+  console.log(item);
+}
 
-setTimeout(() => {
-  divElem.replaceWith(newdiv);
-}, 2000);
+console.log("===for each====");
 
-const anotherUL = document.createElement("ul");
-setTimeout(() => {
-  newdiv.replaceWith(anotherUL);
-}, 3000);
+ulLiElementList.forEach((item) => console.log(item));
 
-*/
-/*
-======================
-// cloning the dom
+console.log("===spread====");
 
-const div = document.createElement("div");
-const span = document.createElement("span");
+[...ulLiElementList].forEach((item) => console.log(item));
 
-span.innerText = "can you clone me ?";
-div.append(span);
+console.log("===array from====");
 
-console.log(div);
-app.append(div);
-
-const clone = div.cloneNode(false);
-console.log(clone);
-
-const cloneDeep = div.cloneNode(true);
-console.log(cloneDeep);
-
-app.append(cloneDeep);
-console.log("----------------");
-const appclonne = app.cloneNode(true);
-console.log(appclonne);
-
-app.append(appclonne);
-
+Array.from(ulLiElementList).forEach((item) => console.log(item));
 */
 
-/*
-=======
-// removing dom nodes
-
-const div = document.createElement("div");
-div.innerText = "I am message";
-
-app.append(div);
-
-setTimeout(() => {
-  div.remove();
-  app.remove();
-}, 2000);
-
-*/
+// Finding Child Elements
 
 /*
+import "../assets/css/style.css";
 
-=======================assignment=========
+const app = document.getElementById("app");
 app.innerHTML = `
-  <h1>Javascript Basic</h1>
-  <div id="family">
-    Family detaail
-  <div>
+  <h1>JavaScript DOM</h1>
+  <ul id="ulElem" class="ul-list">
+    <li class="li-list">Sarng</li>
+    <li class="li-list">Saurabh</li>
+    <li class="li-list">manish</li>
+    <li class="li-list">kk</li>
+ </ul>
 `;
 
-// using inerHtml and using createElement
+const ulElemet = document.querySelector("#ulElem");
+const liElemnts = ulElemet.querySelectorAll(".li-list");
 
-// 1) create node for father name insert 
-// 2) create node for mother name insert first postion
-// 3) sister name from starting div
-// 4) brother name after div
-// 5) clone and you need to insert inside body
-// 6) you need to delete father name
-// 7) uyou have to replace your mother name with full name "mrs xyz abc surname"
+console.log(ulElemet);
+console.log(liElemnts); // nodeList
+
+console.log("===childre/childNodes==========");
+console.log(ulElemet.children); // HtmlCollection
+console.log(ulElemet.childNodes); // nodes with whitespace
+
+console.log("===first/last==========");
+console.log(ulElemet.firstChild);
+console.log(ulElemet.firstElementChild);
+
+console.log(ulElemet.lastChild);
+console.log(ulElemet.lastElementChild);
+
 
 */
