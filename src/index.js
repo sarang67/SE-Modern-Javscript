@@ -3,208 +3,170 @@ import "../assets/css/style.css";
 const app = document.getElementById("app");
 app.innerHTML = `
   <h1>Javascript Basic</h1>
-   <!-- <button style="padding:20px; font-size:20; color:red;border-left:2px solid green"> Click Me </button> -->
-   <button> Click Me </button>
    `;
 
-/***
-      * The parent node property is read only property which returns
-      us the name of the parent node of the selected node as a node
-      object. The Node object represents a single node in the 
-      document tree and a node can be an element node, 
-      text node or more.
-
-      The parent element is read only property which returns the parent 
-      element of the selected element.The element object represents an 
-      HTML element, like P, DIV, etc.
-
-      // event emitting --> browser will do continously
-      // event capturing ---> if you want to takse some action on perticular event then capture it
- 
-* */
+// ***** Event and Event listners********
 
 /*
-// finding parent element
+// removehandler will work only named function ,  it wont with arrow and anonuymous function
+
+
+We have three phase for our eevent propagate, first phase is capturing phase (event goes down to the element), 
+second phase is target phase(wether the event reaches the target element), third phase is bubbling phase (whether the event up for the elemet)
+
+buubling phase is better than capturing phase , so if we make the third option of addEventListner is false (which is by default) 
+means we want to use bubbling phase , or suppose we  make true third parameter , we want to use capturing phase
+
+// will stop propagation on next level // event.stopPropagation();
+
+// will stop immidiate propagation as well , means only one event handler will call, other attached will be avoided
+// event.stopImmediatePropagation();
+
+*/
+
+
+/*
+   // 1) Adding Event listnets
+
 
 app.innerHTML = `
-  <h1>Javascript Basic</h1>
-  <div class="item"></div>
+<h1>JavaScript DOM</h1>
+<button>Click me</button>
+`;
+const btn = document.querySelector("button");
+console.dir(btn);
+
+// first wat to listen or capture the event , and we should not use this way, this way is not recommneded
+// event listning
+
+// btn.onclick = function () {
+//   console.log(1);
+// };
+
+// btn.onclick = function () {
+//   console.log("Task 2");
+// };
+
+// btn.onclick = function () {
+//   console.log("Task 3");
+// };
+
+// event listing using addEventListner // this is the recommened way to use
+// node.addEventListener('event name' , 'function name')
+
+// function handleClick() {
+//   console.log("Task 1");
+// }
+
+// function handleClick2() {
+//   console.log("Task 2");
+// }
+
+// btn.addEventListener("click", handleClick); // this pattern is always recommened
+// btn.addEventListener("click", handleClick2);
+
+// // using arrow function
+
+// btn.addEventListener("click", () => {
+//   console.log("task 3");
+// });
+
+// btn.addEventListener("click", function () {
+//   console.log("task 4");
+// });
+
+function handleClick(ev) {
+console.log(ev); // all the information about event
+console.log(this); // this will be the same node , where addEventListener applied
+console.log(ev.target);
+console.log("click event");
+}
+
+btn.addEventListener("click", handleClick);
+
+console.log("==============================");
+
+btn.addEventListener("click", (ev) => {
+console.log(ev);
+// console.log(this);
+console.log(ev.target);
+console.log("click from arrow function");
+});
+
+*/
+
+/*
+// 2) Remove  Event listnets
+
+app.innerHTML = `
+<h1>JavaScript DOM</h1>
+<button>Click me</button>
 `;
 
-console.log(app);
-const div = document.querySelector(".item");
-console.log(div);
-
-console.log(div.parentNode);
-console.log(div.parentNode.parentNode.parentNode);
-
-console.log("=================");
-console.log(div.parentElement);
-console.log(div.parentElement.parentElement);
-console.log(div.parentElement.parentElement.parentElement);
-
-console.log("====================");
-console.log(div.closest("#app"));
-
-==============================
-*/
-
-/*
-
-// ============== Querying in the DOM ======================
-// finding the sibling
-
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-  <ul id="ulElement" class="ul-list">
-    <li class="li-list">Sarng</li>
-    <li class="li-list">Saurabh</li>
-    <li class="li-list">manish</li>
-    <li class="li-list">kk</li>
- </ul>
-`;
-
-const listItem = document.querySelector("#ulElement li");
-console.log(listItem);
-
-// next sibling
-console.log(listItem.nextSibling);
-console.log(listItem.nextElementSibling);
-
-// previous sibling
-
-console.log(listItem.previousSibling);
-console.log(listItem.previousElementSibling);
-
-**************************************************************
-*/
-
-/*
-// ******** Html attributes v/s javascript dom properties**************
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-  <input type="text" />
-  `;
-
-const input = document.querySelector("input");
-console.log(input);
-
-console.dir(input);
-
-// getting properties
-console.dir(input.type);
-console.log(input.value);
-
-//setting properties
-input.value = 50;
-// mirroring attributes and properties
-input.setAttribute("value", 50);
-//input.type = "email";
-
-*/
-
-/*
-=========================
-  <h1>Javascript Basic</h1>
-   <!-- <button style="padding:20px; font-size:20; color:red;border-left:2px solid green"> Click Me </button> -->
-   <button> Click Me </button>
-   `;
-
-// ******** setting and getting styles**************
 
 const btn = document.querySelector("button");
-console.dir(btn);
-console.dir(btn.style);
-console.log(btn.style.cssText);
 
-const myStyle =
-  "padding:20px; font-size:20; color:red;border-left:2px solid green";
+function handleClickonlyOnce() {
+console.log("clicked happened");
+btn.removeEventListener("click", handleClickonlyOnce);
+}
 
-btn.style.cssText = myStyle;
+// attach the event listner
+btn.addEventListener("click", handleClickonlyOnce);
 
-btn.style.padding = "20px";
-btn.style.fontSize = "20px";
-btn.style.color = "red";
-btn.style["border-left"] = "2px solid green";
+// remove the eventlistner from the name function , they acnt be removed from arrow function
 
-document.querySelector("h1").style.color = "red";
+// setTimeout(() => {
+//   btn.removeEventListener("click", handleClick);
+// }, 2000);
+
+btn.addEventListener("click", () => {
+console.log("clicked happened from arrow");
+});
+
 */
 
+// 3) event-bubbling-capturing-propagation
 /*
-========================
-
-/*
-
-================================================
-// setting and getting class
-
 
 app.innerHTML = `
-  <h1>Javascript Basic</h1>
-   <!-- <button style="padding:20px; font-size:20; color:red;border-left:2px solid green"> Click Me </button> -->
-   <button class="one  two"> Click Me </button>
-   `;
+<h1>Javascript Basic</h1>
+ <div class="one" style ="border:1px solid red; padding:20px">
+    <div class="two" style ="border:1px solid green; padding:20px">
+     <button> Click Me </button>
+    </div>
+ </div>
+ `;
 
 
 
-
+const one = document.querySelector(".one");
+const two = document.querySelector(".two");
 const btn = document.querySelector("button");
-console.dir(btn);
-console.dir(btn.className);
-console.dir(btn.classList);
 
-// old way set class
-btn.className += " three";
+function handleClick(event) {
+// this will stop propagation to the next level
+// event.stopPropagation();
 
-btn.classList.add("four");
-btn.classList.remove("one");
+event.stopImmediatePropagation();
+console.log(event.target); // target
+}
 
-// toggle behaviour  true --> false --> true
-setTimeout(() => {
-  btn.classList.toggle("four"); // if avaibale --> remove
-}, 8000); // 8 sec
+// function handleClickOne(event) {
+//   console.log(event.target); // target
+// }
 
-setTimeout(() => {
-  btn.classList.toggle("four"); // if avaibale --> add
-}, 10000);  // 10 sec
+// function handleClickTwo(event) {
+//   console.log(event.target); // target
+// }
 
-console.dir(btn.className);
+one.addEventListener("click", handleClick);
+two.addEventListener("click", handleClick);
+btn.addEventListener("click", handleClick);
 
-btn.classList.add("nine", "ten");
-btn.classList.add("two", "three");
-
-
-*/
-
-/*
-=========================================
-
-// *****************Event ****************\
-
-// event emitting --> browser will do continously
-// event capturing ---> if you want to takse some action on perticular event then capture it
-
-const btn = document.querySelector("button");
-const h1 = document.querySelector("h1");
-console.dir(btn);
-
-// event capturing
-btn.onmouseenter = function () {
-  console.log("I am entering");
-};
-
-btn.onmouseleave = function () {
-  console.log("I am leaving");
-};
-
-h1.onclick = function () {
-  console.log("I am also clicked");
-};
-
-h1.oncopy = function () {
-  console.log("I am copied");
-};
-
+btn.addEventListener("click", () => {
+console.log("another handller");
+});
 
 
 */
