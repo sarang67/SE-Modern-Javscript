@@ -6,402 +6,214 @@ app.innerHTML = `
    `;
 
 /*
-   //1) access-forms-and-elements
 
- const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>Javascript Basic</h1>
-  <form name="order">
-     <label>
-       Full Name
-        <input type="text" name="fullname"/>
-     </label>
+   // 1) input element
+========================
 
-      <br/>
-     <button type="submit">Order Please</button>
-  </form>
-  `;
+const form = document.forms.example;
+const myInput = form.elements.myInput;
+console.dir(myInput);
 
-//const form = document.querySelector("form");
-//console.log(form);
+// 1 properties
 
-console.log(document.forms);
+// set
+myInput.value = "updated value ";
 
-const orderForm = document.forms.order;
-const user = orderForm.elements.userEmail;
+// get the value
+console.log(myInput.value);
 
-console.log(orderForm);
-console.log(user);
+// myInput.readOnly = true;
+// myInput.disabled = true;
 
-user.addEventListener("input", handleUser);
+// important event
 
-function handleUser(event) {
-  // grab the value
-  console.log(event.target.value);
-  // grab the target
-  console.log(event.target);
-  // grab the form
-  console.log(event.target.form);
-}
+myInput.addEventListener("focus", () => {
+  console.log("I am inside input");
+});
+
+myInput.addEventListener("blur", () => {
+  console.log("I am out of focus");
+});
+
+myInput.addEventListener("change", () => {
+  console.log("The value is changed");
+});
+
+myInput.addEventListener("input", () => {
+  console.log("i am input event");
+});
+
+// important method
+myInput.focus();
+
+setTimeout(() => {
+  myInput.blur();
+}, 2500);
 
 */
-
-
-// submit-event
 
 /*
+==============================================
+
 app.innerHTML = `
   <h1>Javascript Basic</h1>
-  <form name="order">
-     <label>
-       Customer Name
-        <input type="text" name="fullname"/>
-     </label>
-    
-     <br/><br/>
-     <label>
-      <select>
-          <option>Select the pizza ?</option>
-            <option value="peproni">Peproni</option>
-            <option value="cheesy">cheesy</option>
-            <option value="onion">onion</option>
-      </select>
-     </label>
-
-     <br/><br/>
-     <button type="submit">Order Please</button>
+  <form name="example">
+  Choose one color ? 
+  <div id="container">
+    <label>
+      Red: <input type="radio" value="red" name="color" checked/>
+    </label>
+    <label>
+      Green: <input type="radio" value="green" name="color"/>
+    </label>
+    <label>
+      Yellow: <input type="radio" value="yellow" name="color"/>
+    </label>
+  </div>
   </form>
-  `;
+   `;
 
-//const form = document.querySelector("form");
-//console.log(form);
+// 1) radio element
 
-console.log(document.forms);
+const form = document.forms.example;
+const radios = [...form.elements.color]; // [input{checked:true}, input, input]
 
-const orderForm = document.forms.order;
-const user = orderForm.elements.userEmail;
+console.log(radios);
 
-console.log(orderForm);
-console.log(user);
+// imortant properties
 
-function handleUser(event) {
-  console.log(event.target.value);
+radios.forEach((radio) => {
+  //  radio.addEventListener("change", handleChange);
+  //console.log(radio);
+  console.log(radio.value);
+  console.log(radio.checked);
+});
+
+const checked = radios.find((radio) => radio.checked === true);
+console.log(checked);
+console.log(checked.value);
+
+// use of event delegation
+
+const container = document.querySelector("#container");
+container.addEventListener("change", handleChange);
+function handleChange() {
+  //const checked = radios.find((radio) => radio.checked === true);
+  //console.log(checked);
+  //console.log(checked.value);
+
+  // modern way to get value of radio box
+  console.log(form.elements.color.value);
 }
 
-function handlesubmit(event) {
-  event.preventDefault();
-  console.log(event.target);
-}
-
-user.addEventListener("input", handleUser);
-orderForm.addEventListener("submit", handlesubmit);
+// important method
+radios[1].checked = true;
+radios[1].select();
 */
 
-/* 
-// formdata Event
-=================================
-
+/*
+==============================================
 
 const app = document.getElementById("app");
 app.innerHTML = `
-  <h1>Javascript Basic</h1>
-  <form name="order">
-     <label>
-       Customer Name
-        <input type="text" name="fullname"/>
-     </label>
-    
-     <br/><br/>
-     <label>
-      <select name="pizza">
-          <option>Select the pizza ?</option>
-            <option value="peproni">Peproni</option>
-            <option value="cheesy">cheesy</option>
-            <option value="onion">onion</option>
-      </select>
-     </label>
+  <h1>JavaScript DOM</h1>
+  <form name="example">
+  <div id="container">
+      <label>
+        marketing ? 
+        <input type="checkbox"   name="marketing" />
+      </label>
 
-     <br/><br/>
-     <button type="submit">Order Please</button>
+
+  </div>
   </form>
-  `;
+`;
 
-const orderForm = document.forms.order;
-const user = orderForm.elements.fullname;
+// 1) checkbox element
 
-function handleUser(event) {
-  //console.log(event.target.value);
-}
+const form = document.forms.example;
+const checkbox = form.elements.marketing;
 
-function handlesubmit(event) {
-  event.preventDefault();
-  const orderForm = event.target;
-  new FormData(orderForm); // formData event will emit or fire
-}
+console.log(checkbox);
 
-function handleformData(event) {
-  const formdata = event.formData;
-  console.log(formdata);
+// property
 
-  console.log([...formdata]); // entries [key , value]
-  console.log([...formdata.values()]); // [values , values]
-  console.log([...formdata.entries()]); // entries [key , value]
-}
+console.log(checkbox.checked);
+console.log(checkbox.value);
 
-user.addEventListener("input", handleUser); // input box
-orderForm.addEventListener("submit", handlesubmit); // form submit
-orderForm.addEventListener("formdata", handleformData); // when new FormData() will construct
+checkbox.checked = false;
+
+// event
+checkbox.addEventListener("change", () => {
+  console.log(checkbox.checked);
+  console.log(checkbox.value);
+});
+
+// methods
+checkbox.select();
+
+const container = document.querySelector("#container");
+const occupation = [];
+
+container.addEventListener("change", (event) => {
+  occupation.push(event.target.value);
+  console.log(occupation);
+});
 
 */
 
 /*
-// radio box
-================================
+==========================================
 
 app.innerHTML = `
   <h1>Javascript Basic</h1>
-  <form name="order">
-     <label>
-       Customer Name
-        <input type="text" name="fullname" />
-     </label>
-    
-     <br/><br/>
-     <label>
-      <select name="pizza">
-          <option>Select the pizza ?</option>
-            <option value="peproni">Peproni</option>
-            <option value="cheesy">cheesy</option>
-            <option value="onion">onion</option>
+  <form name="example">
+  <div id="container">
+      <select name="framework">
+        <option value="">Sekelecr framework </option>
+        <option value="angular">angular</option>
+        <option value="react">react</option>
+        <option value="vue">vue</option>
       </select>
-     </label>
-
-     <br/><br/>
-     What Sizes ?
-        <label>
-          <input type="radio" value="small" name="sizes"/> Small 
-        </label>
-        <lablel>
-          <input type="radio" value="medium" name="sizes"/> Medium 
-        </label>
-        <lablel>
-          <input type="radio" value="large" name="sizes"/> Large 
-        </label>
-        <lablel>
-          <input type="radio" value="xlarge"  name="sizes" checked /> Extra large 
-        </label>
-     <br/><br/>
-     <label>
-        Quantity ?
-        <input type="number" name="quantity" value="1"/>
-
-     </label>
-     <br/><br/>
-     <button type="submit">Order Please</button>
   </form>
-  `;
+   `;
 
-const orderForm = document.forms.order;
-const user = orderForm.elements.fullname;
+// 1) select element
 
-function handleUser(event) {
-  //console.log(event.target.value);
-}
+const form = document.forms.example;
+const select = form.elements.framework;
 
-function handlesubmit(event) {
-  event.preventDefault();
-  const orderForm = event.target;
-  new FormData(orderForm); // formData event will emit or fire
-}
+console.dir(select);
 
-function handleformData(event) {
-  const formdata = event.formData;
-  console.log(formdata);
+// property
+select.value = "react";
+console.log(select.value);
 
-  console.log([...formdata]); // entries [key , value]
-  console.log([...formdata.values()]); // [values , values]
-  console.log([...formdata.entries()]); // entries [key , value]
-}
+// selectedIndex
+select.selectedIndex = 3;
+console.log(select.selectedIndex);
 
-user.addEventListener("input", handleUser); // input box
-orderForm.addEventListener("submit", handlesubmit); // form submit
-orderForm.addEventListener("formdata", handleformData); // when new FormData() will construct
+// selected dom elment
+console.log(select.options);
+console.log(select.options[select.selectedIndex]);
 
-=====================================
-*/
+// event
 
-/*
-// transform-formdata (json):-
+select.addEventListener("change", () => {
+  console.log(select.value);
+  console.log(select.selectedIndex);
+  console.log(select.options[select.selectedIndex]);
+});
 
-app.innerHTML = `
-  <h1>Javascript Basic</h1>
-  <form name="order">
-     <label>
-       Customer Name
-        <input type="text" name="fullname" />
-     </label>
-    
-     <br/><br/>
-     <label>
-      <select name="pizza">
-          <option>Select the pizza ?</option>
-            <option value="peproni">Peproni</option>
-            <option value="cheesy">cheesy</option>
-            <option value="onion">onion</option>
-      </select>
-     </label>
+// method of adding a new option
 
-     <br/><br/>
-     What Sizes ?
-        <label>
-          <input type="radio" value="small" name="sizes"/> Small 
-        </label>
-        <lablel>
-          <input type="radio" value="medium" name="sizes"/> Medium 
-        </label>
-        <lablel>
-          <input type="radio" value="large" name="sizes"/> Large 
-        </label>
-        <lablel>
-          <input type="radio" value="xlarge"  name="sizes" checked /> Extra large 
-        </label>
-     <br/><br/>
-     <label>
-        Quantity ?
-        <input type="number" name="quantity" value="1"/>
+const option = document.createElement("option"); //<option></option>
+option.value = "javascript"; //<option value="javascript"></option>
+option.innerText = "Javascript"; //<option value="javascript">Javascript</option>
+//select.append(option);
 
-     </label>
-     <br/><br/>
-     <button type="submit">Order Please</button>
-  </form>
-  `;
-
-const orderForm = document.forms.order;
-const user = orderForm.elements.fullname;
-
-function handleUser(event) {
-  //console.log(event.target.value);
-}
-
-function handlesubmit(event) {
-  event.preventDefault();
-  const orderForm = event.target;
-  new FormData(orderForm); // formData event will emit or fire
-}
-
-function handleformData(event) {
-  const formdata = event.formData;
-  console.log(formdata);
-
-  console.log([...formdata]); // entries [key , value]
-  console.log([...formdata.values()]); // [values , values]
-  console.log([...formdata.entries()]); // entries [key , value]
-
-  const entriesData = [...formdata.entries()];
-
-  const entriesObj = Object.fromEntries(entriesData);
-  console.log(entriesObj);
-  const payloadFormatJSON = JSON.stringify(entriesObj);
-  console.log(payloadFormatJSON);
-}
-
-user.addEventListener("input", handleUser); // input box
-orderForm.addEventListener("submit", handlesubmit); // form submit
-orderForm.addEventListener("formdata", handleformData); // when new FormData() will construct
-
-*/
-
-// fetch-api-formdata (send form data):-
-/*
-================================
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>Javascript Basic</h1>
-  <form name="order">
-     <label>
-       Customer Name
-        <input type="text" name="fullname" />
-     </label>
-    
-     <br/><br/>
-     <label>
-      <select name="pizza">
-          <option>Select the pizza ?</option>
-            <option value="peproni">Peproni</option>
-            <option value="cheesy">cheesy</option>
-            <option value="onion">onion</option>
-      </select>
-     </label>
-
-     <br/><br/>
-     What Sizes ?
-        <label>
-          <input type="radio" value="small" name="sizes"/> Small 
-        </label>
-        <lablel>
-          <input type="radio" value="medium" name="sizes"/> Medium 
-        </label>
-        <lablel>
-          <input type="radio" value="large" name="sizes"/> Large 
-        </label>
-        <lablel>
-          <input type="radio" value="xlarge"  name="sizes" checked /> Extra large 
-        </label>
-     <br/><br/>
-     <label>
-        Quantity ?
-        <input type="number" name="quantity" value="1"/>
-
-     </label>
-     <br/><br/>
-     <button type="submit">Order Please</button>
-  </form>
-  `;
-
-const orderForm = document.forms.order;
-const user = orderForm.elements.fullname;
-
-function handleUser(event) {
-  //console.log(event.target.value);
-}
-
-function handlesubmit(event) {
-  event.preventDefault();
-  const orderForm = event.target;
-  new FormData(orderForm); // formData event will emit or fire
-}
-
-function handleformData(event) {
-  const formdata = event.formData;
-  console.log(formdata);
-
-  console.log([...formdata]); // entries [key , value]
-  console.log([...formdata.values()]); // [values , values]
-  console.log([...formdata.entries()]); // entries [key , value]
-
-  const entriesData = [...formdata.entries()];
-
-  const entriesObj = Object.fromEntries(entriesData);
-  console.log(entriesObj);
-  const payloadFormatJSON = JSON.stringify(entriesObj);
-  console.log(payloadFormatJSON);
-
-  // how you will communicate the server
-  fetch("/fakeaddress", {
-    method: "post",
-    body: payloadFormatJSON,
-    headers: {
-      "Content-Type": "application/json",
-      "x-my-custom-header": "test",
-    },
-  });
-}
-
-user.addEventListener("input", handleUser); // input box
-orderForm.addEventListener("submit", handlesubmit); // form submit
-orderForm.addEventListener("formdata", handleformData); // when new FormData() will construct
-
-
+// important method
+select.add(option, 2);
 
 
 */
