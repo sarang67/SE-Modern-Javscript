@@ -1,219 +1,250 @@
-import "../assets/css/style.css";
-
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>Javascript Basic</h1>
-   `;
+// 1) Setup Instructions , take images and already written CSS
 
 /*
-
-   // 1) input element
-========================
-
-const form = document.forms.example;
-const myInput = form.elements.myInput;
-console.dir(myInput);
-
-// 1 properties
-
-// set
-myInput.value = "updated value ";
-
-// get the value
-console.log(myInput.value);
-
-// myInput.readOnly = true;
-// myInput.disabled = true;
-
-// important event
-
-myInput.addEventListener("focus", () => {
-  console.log("I am inside input");
-});
-
-myInput.addEventListener("blur", () => {
-  console.log("I am out of focus");
-});
-
-myInput.addEventListener("change", () => {
-  console.log("The value is changed");
-});
-
-myInput.addEventListener("input", () => {
-  console.log("i am input event");
-});
-
-// important method
-myInput.focus();
-
-setTimeout(() => {
-  myInput.blur();
-}, 2500);
-
-*/
-
-/*
-==============================================
-
+//2) Structuring our HTML Template
+=================================
 app.innerHTML = `
-  <h1>Javascript Basic</h1>
-  <form name="example">
-  Choose one color ? 
-  <div id="container">
-    <label>
-      Red: <input type="radio" value="red" name="color" checked/>
-    </label>
-    <label>
-      Green: <input type="radio" value="green" name="color"/>
-    </label>
-    <label>
-      Yellow: <input type="radio" value="yellow" name="color"/>
-    </label>
+  <div class="todos">
+     <div class="todos-header">
+       <h3 class="todos-title">Todo List</h3>
+       <div>
+        <p>You have <span class="todos-count"></span>items</p>
+        <button class="todos-clear" style="display:none">Clear completed</button>
+       </div>
+     </div>
+
+     <form class="todos-form" name="todos">
+       <input type="text" placeholder="what you want to add next?" name="todo">
+     </form>
+
+     <ul class="todos-list">
+     </ul>
   </div>
-  </form>
-   `;
-
-// 1) radio element
-
-const form = document.forms.example;
-const radios = [...form.elements.color]; // [input{checked:true}, input, input]
-
-console.log(radios);
-
-// imortant properties
-
-radios.forEach((radio) => {
-  //  radio.addEventListener("change", handleChange);
-  //console.log(radio);
-  console.log(radio.value);
-  console.log(radio.checked);
-});
-
-const checked = radios.find((radio) => radio.checked === true);
-console.log(checked);
-console.log(checked.value);
-
-// use of event delegation
-
-const container = document.querySelector("#container");
-container.addEventListener("change", handleChange);
-function handleChange() {
-  //const checked = radios.find((radio) => radio.checked === true);
-  //console.log(checked);
-  //console.log(checked.value);
-
-  // modern way to get value of radio box
-  console.log(form.elements.color.value);
-}
-
-// important method
-radios[1].checked = true;
-radios[1].select();
-*/
-
-/*
-==============================================
-
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-  <form name="example">
-  <div id="container">
-      <label>
-        marketing ? 
-        <input type="checkbox"   name="marketing" />
-      </label>
-
-
-  </div>
-  </form>
 `;
 
-// 1) checkbox element
+*/
 
-const form = document.forms.example;
-const checkbox = form.elements.marketing;
+/*
+// 3) State Initialization and Submit Events
+=====================================
+app.innerHTML = `
+  <div class="todos">
+     <div class="todos-header">
+       <h3 class="todos-title">Todo List</h3>
+       <div>
+        <p>You have <span class="todos-count"></span>items</p>
+        <button class="todos-clear" style="display:none">Clear completed</button>
+       </div>
+     </div>
 
-console.log(checkbox);
+     <form class="todos-form" name="todos">
+       <input type="text" placeholder="what you want to add next?" name="todo">
+     </form>
 
-// property
+     <ul class="todos-list">
+     </ul>
+  </div>
+`;
 
-console.log(checkbox.checked);
-console.log(checkbox.value);
+const form = document.forms.todos;
+const input = form.elements.todo;
 
-checkbox.checked = false;
+// state management
+let todos = []; // [{ label: 1, complete: true } , { label: 2, complete: false }]
 
-// event
-checkbox.addEventListener("change", () => {
-  console.log(checkbox.checked);
-  console.log(checkbox.value);
-});
+// functions
 
-// methods
-checkbox.select();
+// add functionality
+function addTodo(event) {
+  event.preventDefault();
+  const label = input.value.trim();
+  const complete = false;
 
-const container = document.querySelector("#container");
-const occupation = [];
+  const todo = { label, complete };
+  todos = [...todos, todo];
+  //  console.log(todos);
+  input.value = "";
+}
 
-container.addEventListener("change", (event) => {
-  occupation.push(event.target.value);
-  console.log(occupation);
-});
+// init
+function initi() {
+  form.addEventListener("submit", addTodo);
+}
+
+initi();
 
 */
 
 /*
-==========================================
+4) Rendering State with Template Literals
+==============================
 
 app.innerHTML = `
-  <h1>Javascript Basic</h1>
-  <form name="example">
-  <div id="container">
-      <select name="framework">
-        <option value="">Sekelecr framework </option>
-        <option value="angular">angular</option>
-        <option value="react">react</option>
-        <option value="vue">vue</option>
-      </select>
-  </form>
-   `;
+  <div class="todos">
+     <div class="todos-header">
+       <h3 class="todos-title">Todo List</h3>
+       <div>
+        <p>You have <span class="todos-count"></span>items</p>
+        <button class="todos-clear" style="display:none">Clear completed</button>
+       </div>
+     </div>
 
-// 1) select element
+     <form class="todos-form" name="todos">
+       <input type="text" placeholder="what you want to add next?" name="todo">
+     </form>
 
-const form = document.forms.example;
-const select = form.elements.framework;
+     <ul class="todos-list">
+     </ul>
+  </div>
+`;
 
-console.dir(select);
+// selector
+const root = document.querySelector(".todos");
+const list = root.querySelector(".todos-list");
 
-// property
-select.value = "react";
-console.log(select.value);
+const form = document.forms.todos;
+const input = form.elements.todo;
 
-// selectedIndex
-select.selectedIndex = 3;
-console.log(select.selectedIndex);
+// state management
+let todos = []; // [{ label: 1, complete: true } , { label: 2, complete: false }]
 
-// selected dom elment
-console.log(select.options);
-console.log(select.options[select.selectedIndex]);
+// functions
 
-// event
+// render functinality
+function renderTodos(todos) {
+  // console.log(todos);
+  let todosString = ``;
 
-select.addEventListener("change", () => {
-  console.log(select.value);
-  console.log(select.selectedIndex);
-  console.log(select.options[select.selectedIndex]);
-});
+  // construct
+  todos.forEach((todo, index) => {
+    todosString += `
+       <li id="${index}">
+          <input type="checkbox">
+          <span>${todo.label}</span>
+          <button></button>
+       </li>
+     `;
+  });
 
-// method of adding a new option
+  //console.log(todosString);
+  list.innerHTML = todosString;
+}
 
-const option = document.createElement("option"); //<option></option>
-option.value = "javascript"; //<option value="javascript"></option>
-option.innerText = "Javascript"; //<option value="javascript">Javascript</option>
-//select.append(option);
+// add functionality
+function addTodo(event) {
+  event.preventDefault();
+  const label = input.value.trim();
+  const complete = false;
 
-// important method
-select.add(option, 2);
+  const todo = { label, complete };
+  todos = [...todos, todo];
+  //  console.log(todos);
+  renderTodos(todos);
+  input.value = "";
+}
 
+// init
+function initi() {
+  form.addEventListener("submit", addTodo);
+}
+
+initi();
+
+*/
+
+/*
+5) Updating State via Event Delegation
+=========================================
+app.innerHTML = `
+  <div class="todos">
+     <div class="todos-header">
+       <h3 class="todos-title">Todo List</h3>
+       <div>
+        <p>You have <span class="todos-count"></span> items</p>
+        <button class="todos-clear" style="display:none">Clear completed</button>
+       </div>
+     </div>
+
+     <form class="todos-form" name="todos">
+       <input type="text" placeholder="what you want to add next?" name="todo">
+     </form>
+
+     <ul class="todos-list">
+     </ul>
+  </div>
+`;
+
+// selector
+const root = document.querySelector(".todos");
+const list = root.querySelector(".todos-list");
+const count = root.querySelector(".todos-count");
+
+const form = document.forms.todos;
+const input = form.elements.todo;
+
+// state management
+let todos = []; // [{ label: 1, complete: false } , { label: 2, complete: false }]
+
+// functions
+
+// render functinality
+function renderTodos(todos) {
+  // console.log(todos);
+  let todosString = ``;
+
+  // construct
+  todos.forEach((todo, index) => {
+    todosString += `
+       <li id="${index}" ${todo.complete ? "class='todos-complete'" : ""}>
+          <input type="checkbox" ${todo.complete ? "checked" : ""}>
+          <span>${todo.label}</span>
+          <button></button>
+       </li>
+     `;
+  });
+
+  //console.log(todosString);
+  list.innerHTML = todosString;
+  count.innerText = todos.filter((todo) => !todo.complete).length;
+}
+
+// create/ add functionality
+function addTodo(event) {
+  event.preventDefault();
+  const label = input.value.trim();
+  const complete = false;
+
+  const todo = { label, complete };
+  todos = [...todos, todo];
+  //  console.log(todos);
+  renderTodos(todos);
+  input.value = "";
+}
+
+// updateTodo
+function updateTodo(event) {
+  console.log(event.target);
+  const id = Number(event.target.parentNode.getAttribute("id")); // 1
+  const complete = event.target.checked; // true
+
+  todos = todos.map((todo, index) => {
+    if (id === index) {
+      const updatedTodo = { ...todo, complete: complete };
+      return updatedTodo;
+    }
+    return todo;
+  });
+
+  console.log(todos);
+  renderTodos(todos);
+}
+
+// init
+function initi() {
+  form.addEventListener("submit", addTodo);
+  list.addEventListener("change", updateTodo);
+}
+
+initi();
 
 */
