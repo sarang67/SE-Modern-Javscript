@@ -3,359 +3,377 @@ import "../assets/css/style.css";
 const app = document.getElementById("app");
 
 app.innerHTML = `
-  <div class="todos">
-     <div class="todos-header">
-       <h3 class="todos-title">Todo List</h3>
-       <div>
-        <p>You have <span class="todos-count"></span> items</p>
-        <button class="todos-clear" style="display:none">Clear completed</button>
-       </div>
-     </div>
-
-     <form class="todos-form" name="todos">
-       <input type="text" placeholder="what you want to add next?" name="todo">
-     </form>
-
-     <ul class="todos-list">
-     </ul>
-  </div>
+    <main class="container">
+       <div class="countries"></div>
+    </main>
 `;
 
-// Deleting Items from State
+// chaining promise
+
+const countriesContainer = document.querySelector(".countries");
+
+function renderCountry(data, clasName = "") {
+  const { name, region, flag, population, languages, currencies } = data;
+
+  const html = `
+<article class="country ${clasName}">
+  <img class="country__img" src="${flag}" />
+  <div class="country__data">
+    <h3 class="country__name">${name}</h3>
+    <h4 class="country__region">${region}</h4>
+    <p class="country__row"><span>👫${population}</span>POP people</p>
+    <p class="country__row"><span>🗣️ ${languages[0].name}</span>LANG</p>
+    <p class="country__row"><span>💰 ${currencies[0].name}</span>CUR</p>
+  </div>
+</article>
+`;
+
+  //console.log(html);
+  countriesContainer.innerHTML += html;
+  countriesContainer.style.opacity = 1;
+}
+
+const getCountrydata = function (country) {
+  const request = fetch(`https://restcountries.com/v2/name/${country}`);
+  console.log(request); // pending
+
+  /*
+    1) panding
+    2) fullfilled ---> A) succes --> then
+                  ---> B) rejecty --> catch
+  */
+
+  request
+    .then((res) => {
+      // console.log(res);
+      // for finding the real data
+      return res.json();
+      //return "sarang jain";
+    })
+    .then((data) => {
+      console.log(data[0]);
+      renderCountry(data[0]);
+
+      const neighbour = data[0].borders[0];
+      if (!neighbour) {
+        return;
+      }
+
+      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+    })
+    .then((res) => {
+      console.log(res);
+      return res.json();
+    })
+    .then((data) => {
+      console.log(data);
+      renderCountry(data, "neighbour");
+    })
+    .catch((errData) => {
+      console.log(errData);
+    });
+};
+
+getCountrydata("portugal");
 
 /*
+
+Asynchronous JavaScript, AJAX and APIs
+==============================================
+our Javascript executes line by line , so during execution some statament are blocking statement means they block our code to execute until thay itself executes, so such blocking statament executes as asynchronusly . means they executes behind the scene for example setTimeout . setInterval , xhr call , event . so javascript run such bloking task(which depends on other thing) behid the scene . and we attach event to to bloking task , when the task is completed our attach event handler will be called. for example
+
+1) our in programme we changed the src attribute url , now this may take time as per image size , now what will happen javascript executes this behind the scene, asynchronus behaviour and we attach the even handler, so once our image get load our even handler will be executed.
+
+2) we make xhr request , when we send the xhr request , and attach event handler so as per javascript execution javascript send the request and wont wait for complete and will execute next statement, and now once background process complete our xhr event handler will be called.
+
+//steps
+1)  craete request usnig new XMLHttpRequest()
+2) open request req.open('get or any method', 'url')
+3) send the request req.send()
+4) use the addEventListner for load request , so when your result will come you will get response
+
+
+Welcome to Callback Hell
+========================
+
+ in this example we want to showing country information , so that is fine , but what happened we need toshow countrey's border country , then our call will be sequential call suppose we are shaowing india , and india's response we are getting border bangladesh , now we are showing bangladesh a, and bangladesh border we are getting bhutan , now means our request will be depend on each other means this is called sequentail call and when we have lot of sequnetial call we have callback hell and after sometime we itself unable to understand what is happening in code. so the solution came for callback hell is promise object. here we can make promise chain which wll always give better look and devloper will easily understand how chaining is working.
+
+ Promises and the Fetch API
+=================================
+Promise is ES6 feature to handle asynchronus behaviour , and fetch is the new api introduced in es6 which is used for xhr request, fetch will always return a promise type of object.
+
+bet defination of promise is promise is the container object which keep the result of future , so this result could be success or reject , and when reult will be successful our then method will be called which take a callback, or when reject in future our error catch function will be called.
+
+
+const request = fetch(`https://restcountries.com/v2/name/portugal`);
+console.log(request); // pending
+
+
+  1) panding
+  2) fullfilled ---> A) succes --> then
+                ---> B) rejecty --> catch
+
+
+
+*/
+
+/*
+
+2) Our First AJAX Call_ XMLHttpRequest old pattern
+===================================================
 import "../assets/css/style.css";
 
 const app = document.getElementById("app");
 
 app.innerHTML = `
-  <div class="todos">
-     <div class="todos-header">
-       <h3 class="todos-title">Todo List</h3>
-       <div>
-        <p>You have <span class="todos-count"></span> items</p>
-        <button class="todos-clear" style="display:none">Clear completed</button>
-       </div>
-     </div>
-
-     <form class="todos-form" name="todos">
-       <input type="text" placeholder="what you want to add next?" name="todo">
-     </form>
-
-     <ul class="todos-list">
-     </ul>
-  </div>
+    <main class="container">
+       <div class="countries"></div>
+    </main>
 `;
 
-// selector
-const root = document.querySelector(".todos");
-const list = root.querySelector(".todos-list");
-const count = root.querySelector(".todos-count");
+const countriesContainer = document.querySelector(".countries");
 
-const form = document.forms.todos;
-const input = form.elements.todo;
+function getCountryData(country) {
+  // create a request
+  const request = new XMLHttpRequest();
+  // open a request
+  request.open("GET", `https://restcountries.com/v2/name/${country}`);
+  // send a request
+  request.send();
+  //console.log("===>", request.responseText);
 
-// state management
-let todos = []; // [{ label: 1, complete: false } , { label: 2, complete: false }]
+  request.addEventListener("load", function () {
+    //console.log("result came");
+    //console.log(request.responseText);
+    //console.log(JSON.parse(request.responseText));
 
-// functions
+    const data = JSON.parse(request.responseText)[0];
+    console.log(data);
 
-// render functinality
-function renderTodos(todos) {
-  // console.log(todos);
-  let todosString = ``;
+    const { name, region, flag, population, languages, currencies } = data;
 
-  // construct
-  todos.forEach((todo, index) => {
-    todosString += `
-       <li id="${index}" ${todo.complete ? "class='todos-complete'" : ""}>
-          <input type="checkbox" ${todo.complete ? "checked" : ""}>
-          <span>${todo.label}</span>
-          <button></button>
-       </li>
-     `;
+    const html = `
+  <article class="country">
+    <img class="country__img" src="${flag}" />
+    <div class="country__data">
+      <h3 class="country__name">${name}</h3>
+      <h4 class="country__region">${region}</h4>
+      <p class="country__row"><span>👫${population}</span>POP people</p>
+      <p class="country__row"><span>🗣️ ${languages[0].name}</span>LANG</p>
+      <p class="country__row"><span>💰 ${currencies[0].name}</span>CUR</p>
+    </div>
+  </article>
+`;
+
+    console.log(html);
+    countriesContainer.innerHTML += html;
+    countriesContainer.style.opacity = 1;
   });
-
-  //console.log(todosString);
-  list.innerHTML = todosString;
-  count.innerText = todos.filter((todo) => !todo.complete).length;
 }
 
-// create/ add functionality
-function addTodo(event) {
-  event.preventDefault();
-  const label = input.value.trim();
-  const complete = false;
+getCountryData("portugal");
+getCountryData("usa");
+getCountryData("germany");
 
-  const todo = { label, complete };
-  todos = [...todos, todo];
-  //  console.log(todos);
-  renderTodos(todos);
-  input.value = "";
-}
-
-// updateTodo
-function updateTodo(event) {
-  console.log(event.target);
-  const id = Number(event.target.parentNode.getAttribute("id")); // 1
-  const complete = event.target.checked; // true
-
-  todos = todos.map((todo, index) => {
-    if (id === index) {
-      const updatedTodo = { ...todo, complete: complete };
-      return updatedTodo;
-    }
-    return todo;
-  });
-
-  console.log(todos);
-  renderTodos(todos);
-}
-
-function deleteTodo(event) {
-  console.log(event.target.nodeName);
-  if (event.target.nodeName !== "BUTTON") {
-    return;
-  }
-
-  const id = Number(event.target.parentNode.getAttribute("id")); // 1
-  todos = todos.filter((item, index) => index !== id);
-
-  console.log(todos);
-  renderTodos(todos);
-}
-
-// init
-function initi() {
-  // add functinality
-  form.addEventListener("submit", addTodo);
-
-  // update functinality
-  list.addEventListener("change", updateTodo);
-
-  // delete functinality
-
-  list.addEventListener("click", deleteTodo);
-}
-
-initi();
 */
 
-
-// 2) Clear functinality , Toggling UI State and Filtering Collections
-// 3) browser State to LocalStorage
-// 4) Dynamic DOM Injection for Editing functinality
-
-
 /*
-  or operator ---> this will return fist truthy expression , in case first expression is falsy the second one will be returned
-*/
+=====================================================
+// 4) Welcome to Callback Hell problem
 
-
-/*
 import "../assets/css/style.css";
 
 const app = document.getElementById("app");
 
 app.innerHTML = `
-  <div class="todos">
-     <div class="todos-header">
-       <h3 class="todos-title">Todo List</h3>
-       <div>
-        <p>You have <span class="todos-count"></span> items</p>
-        <button class="todos-clear" style="display:none">Clear completed</button>
-       </div>
-     </div>
-
-     <form class="todos-form" name="todos">
-       <input type="text" placeholder="what you want to add next?" name="todo">
-     </form>
-
-     <ul class="todos-list">
-     </ul>
-  </div>
+    <main class="container">
+       <div class="countries"></div>
+    </main>
 `;
 
-// selector
-const root = document.querySelector(".todos");
-const list = root.querySelector(".todos-list");
-const count = root.querySelector(".todos-count");
-const clear = root.querySelector(".todos-clear");
+const countriesContainer = document.querySelector(".countries");
 
-const form = document.forms.todos;
-const input = form.elements.todo;
+// 2) renderuing view
 
+function renderCountry(data, clasName = "") {
+  const { name, region, flag, population, languages, currencies } = data;
 
+  const html = `
+<article class="country ${clasName}">
+  <img class="country__img" src="${flag}" />
+  <div class="country__data">
+    <h3 class="country__name">${name}</h3>
+    <h4 class="country__region">${region}</h4>
+    <p class="country__row"><span>👫${population}</span>POP people</p>
+    <p class="country__row"><span>🗣️ ${languages[0].name}</span>LANG</p>
+    <p class="country__row"><span>💰 ${currencies[0].name}</span>CUR</p>
+  </div>
+</article>
+`;
 
-// state management
-// let todos;
-// console.log(JSON.parse(localStorage.getItem("todos")));
-// if (JSON.parse(localStorage.getItem("todos"))) {
-//   todos = JSON.parse(localStorage.getItem("todos"));
-// } else {
-//   todos = [];
-// }
-
-let todos = JSON.parse(localStorage.getItem("todos")) || [];
-
-// [{ label: 1, complete: false } , { label: 2, complete: false }]
-
-// functions
-
-function saveToStorage(todos) {
-  localStorage.setItem("todos", JSON.stringify(todos));
+  console.log(html);
+  countriesContainer.innerHTML += html;
+  countriesContainer.style.opacity = 1;
 }
 
-// render functinality
-function renderTodos(todos) {
-  // console.log(todos);
-  let todosString = ``;
+// 1) get country
+function getCountryData(country) {
+  // create a request ---> ajax call for country 1
+  const request = new XMLHttpRequest();
+  // open a request  --> call for country 1
+  request.open("GET", `https://restcountries.com/v2/name/${country}`);
+  // send a request --> call for country 1
+  request.send();
 
-  // construct
-  todos.forEach((todo, index) => {
-    todosString += `
-       <li id="${index}" ${todo.complete ? "class='todos-complete'" : ""}>
-          <input type="checkbox" ${todo.complete ? "checked" : ""}>
-          <span>${todo.label}</span>
-          <button></button>
-       </li>
-     `;
-  });
+  // call back functiomn --> call for country 1
+  request.addEventListener("load", function () {
+    const data = JSON.parse(request.responseText)[0];
+    console.log(data);
+    renderCountry(data);
 
-  //console.log(todosString);
-  list.innerHTML = todosString;
-  count.innerText = todos.filter((todo) => !todo.complete).length;
+    // ajax call 2 for neighbour country
+    // create a request2 ---> ajax call for country 1 neighbour
+    const request2 = new XMLHttpRequest();
+    const neighbour = data.borders[0];
 
-  clear.style.display = todos.filter((todo) => todo.complete).length
-    ? "block"
-    : "none";
-}
-
-// create/ add functionality
-function addTodo(event) {
-  event.preventDefault();
-  const label = input.value.trim();
-  const complete = false;
-
-  const todo = { label, complete };
-  todos = [...todos, todo];
-  //  console.log(todos);
-  renderTodos(todos);
-  saveToStorage(todos);
-  input.value = "";
-}
-
-// updateTodo
-function updateTodo(event) {
-  debugger;
-  //  console.log(event.target);
-  const id = Number(event.target.parentNode.getAttribute("id")); // 1
-  const complete = event.target.checked; // true
-
-  todos = todos.map((todo, index) => {
-    if (id === index) {
-      const updatedTodo = { ...todo, complete: complete };
-      return updatedTodo;
-    }
-    return todo;
-  });
-
-  // console.log(todos);
-  renderTodos(todos);
-  saveToStorage(todos);
-}
-
-function editTodo(event) {
-  // console.log(event.target.nodeName);
-  if (event.target.nodeName !== "SPAN") {
-    return;
-  }
-
-  //   1) FIND INPUT BOX INSIDE UL LIST
-  //    2) IF YOU FIND THEN RETUN AND SHOW ALERT BOX(EDIT INPUT BOX ALREADY AVAIBALE PLEASE FILL THAT FIRST)
-
-  const id = Number(event.target.parentNode.getAttribute("id"));
-  const todoLabel = todos[id].label;
-  console.log(todoLabel);
-
-  const input = document.createElement("input");
-  input.type = "text";
-  input.value = todoLabel;
-  console.dir(input);
-
-  event.target.style.display = "none";
-  event.target.parentNode.append(input);
-
-  function handleEdit(event) {
-    event.stopPropagation();
-    const label = this.value;
-    if (label !== todoLabel) {
-      todos = todos.map((todo, index) => {
-        if (index === id) {
-          return {
-            ...todo,
-            label: label,
-          };
-        }
-        return todo;
-      });
+    if (!neighbour) {
+      return;
     }
 
-    renderTodos(todos);
-    saveToStorage(todos);
-  }
+    // open a request  --> call for country 1 neighbour
+    request2.open("GET", `https://restcountries.com/v2/alpha/${neighbour}`);
 
-  input.addEventListener("change", handleEdit);
+    // send a request --> call for country 1 neighbour
+    request2.send();
+
+    request2.addEventListener("load", function () {
+      const data = JSON.parse(request2.responseText);
+      renderCountry(data, "neighbour");
+    });
+  });
 }
 
-function deleteTodo(event) {
-  // console.log(event.target.nodeName);
-  if (event.target.nodeName !== "BUTTON") {
-    return;
-  }
+getCountryData("portugal");
+// getCountryData("usa");
+// getCountryData("germany");
 
-  const id = Number(event.target.parentNode.getAttribute("id")); // 1
-  todos = todos.filter((item, index) => index !== id);
+// callback hell problem
+// setTimeout(() => {
+//   console.log("1 second passed");
+//   setTimeout(() => {
+//     console.log("2 second passed");
+//     setTimeout(() => {
+//       console.log("3 second passed");
+//       setTimeout(() => {
+//         console.log("4 second passed");
+//       }, 1000);
+//     }, 1000);
+//   }, 1000);
+// }, 1000);
 
-  // console.log(todos);
-  renderTodos(todos);
-  saveToStorage(todos);
+*/
+
+/*
+=================================================================
+// 6) Consuming Promises
+
+const countriesContainer = document.querySelector(".countries");
+
+function renderCountry(data, clasName = "") {
+  const { name, region, flag, population, languages, currencies } = data;
+
+  const html = `
+<article class="country ${clasName}">
+  <img class="country__img" src="${flag}" />
+  <div class="country__data">
+    <h3 class="country__name">${name}</h3>
+    <h4 class="country__region">${region}</h4>
+    <p class="country__row"><span>👫${population}</span>POP people</p>
+    <p class="country__row"><span>🗣️ ${languages[0].name}</span>LANG</p>
+    <p class="country__row"><span>💰 ${currencies[0].name}</span>CUR</p>
+  </div>
+</article>
+`;
+
+  //console.log(html);
+  countriesContainer.innerHTML += html;
+  countriesContainer.style.opacity = 1;
 }
 
-function clearCompleteTodo() {
-  // debugger;
-  let totalCLearCount = todos.filter((todo) => todo.complete).length;
+  .then((res) => {
+    console.log(res);
+    // for finding the real data
+    return res.json();
+    //return "sarang jain";
+  })
+  .then((data) => {
+    console.log(data[0]);
+    renderCountry(data[0]);
+  })
+  .catch((errData) => {
+    console.log(errData);
+  });
 
-  if (totalCLearCount === 0) {
-    alert("please complete any task");
-  }
+  */
 
-  todos = todos.filter((todo) => !todo.complete);
-  renderTodos(todos);
-  saveToStorage(todos);
+/*
+===============================
+// 7) Chaining Promises:- for resolve callbacl hell issue
+
+const countriesContainer = document.querySelector(".countries");
+
+function renderCountry(data, clasName = "") {
+  const { name, region, flag, population, languages, currencies } = data;
+
+  const html = `
+<article class="country ${clasName}">
+  <img class="country__img" src="${flag}" />
+  <div class="country__data">
+    <h3 class="country__name">${name}</h3>
+    <h4 class="country__region">${region}</h4>
+    <p class="country__row"><span>👫${population}</span>POP people</p>
+    <p class="country__row"><span>🗣️ ${languages[0].name}</span>LANG</p>
+    <p class="country__row"><span>💰 ${currencies[0].name}</span>CUR</p>
+  </div>
+</article>
+`;
+
+  //console.log(html);
+  countriesContainer.innerHTML += html;
+  countriesContainer.style.opacity = 1;
 }
 
-// init
-function initi() {
-  renderTodos(todos);
 
-  //1 add functinality
-  form.addEventListener("submit", addTodo);
+  request
+    .then((res) => {
+      // console.log(res);
+      // for finding the real data
+      return res.json();
+      //return "sarang jain";
+    })
+    .then((data) => {
+      console.log(data[0]);
+      renderCountry(data[0]);
 
-  // 2 update functinality
-  list.addEventListener("change", updateTodo);
+      const neighbour = data[0].borders[0];
+      if (!neighbour) {
+        return;
+      }
 
-  // 5 update label functinality
-  list.addEventListener("dblclick", editTodo);
+      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+    })
+    .then((res) => {
+      console.log(res);
+      return res.json();
+    })
+    .then((data) => {
+      console.log(data);
+      renderCountry(data, "neighbour");
+    })
+    .catch((errData) => {
+      console.log(errData);
+    });
+};
 
-  // 3 delete functinality
-  list.addEventListener("click", deleteTodo);
-
-  // 4 clear functinality
-  clear.addEventListener("click", clearCompleteTodo);
-}
-
-initi();
-
-
+getCountrydata("portugal");
 */
